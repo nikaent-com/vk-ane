@@ -1,0 +1,13 @@
+<extension xmlns="http://ns.adobe.com/air/extension/3.5">
+        <id>com.gogames.ane</id>
+        <versionNumber>1</versionNumber>
+        <platforms>
+                <platform name="Android-ARM">
+                        <applicationDeployment>
+                                <nativeLibrary>ane.jar</nativeLibrary>
+                                <initializer>com.gogames.ane.AneVk</initializer>
+                                <finalizer>com.gogames.ane.AneVk</finalizer>
+                        </applicationDeployment>
+                </platform>
+        </platforms>
+</extension>

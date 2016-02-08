@@ -1,5 +1,6 @@
 package com.gogames.ane;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import com.adobe.fre.FREContext;
@@ -15,8 +16,10 @@ public class NotificationExtensionContext extends FREContext {
 
 	@Override
 	public Map<String, FREFunction> getFunctions() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		Map<String, FREFunction> map = new HashMap<String, FREFunction>();
+        map.put("showToast", new ShowToastFuntion());
+        map.put("showAlert", new ShowAlertFuntion());
+        return map;
+       }
 
 }
