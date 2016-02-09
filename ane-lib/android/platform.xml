@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<platform xmlns="http://ns.adobe.com/air/extension/18.0">
+	<packagedDependencies>
+		<packagedDependency>classes.jar</packagedDependency>
+	</packagedDependencies>
+	<packagedResources>
+		<packagedResource>
+			<packageName>com.vk.sdk</packageName>
+			<folderName>res</folderName>
+		</packagedResource>
+		<packagedResource>
+			<packageName>com.gogames.ane</packageName>
+			<folderName>vk-res</folderName>
+		</packagedResource>
+	</packagedResources>
+</platform>

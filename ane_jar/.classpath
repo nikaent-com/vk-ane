@@ -6,5 +6,6 @@
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry kind="lib" path="/Users/alekseykabanov/apache-flex_20b_20b/lib/android/FlashRuntimeExtensions.jar"/>
+	<classpathentry kind="lib" path="/Users/alekseykabanov/AndroidStudioProjects/MyApplication2/vksdk_library/build/intermediates/bundles/release/classes.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

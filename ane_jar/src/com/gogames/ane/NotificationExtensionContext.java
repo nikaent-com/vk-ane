@@ -7,7 +7,6 @@ import com.adobe.fre.FREContext;
 import com.adobe.fre.FREFunction;
 
 public class NotificationExtensionContext extends FREContext {
-
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
@@ -17,9 +16,9 @@ public class NotificationExtensionContext extends FREContext {
 	@Override
 	public Map<String, FREFunction> getFunctions() {
 		Map<String, FREFunction> map = new HashMap<String, FREFunction>();
-        map.put("showToast", new ShowToastFuntion());
-        map.put("showAlert", new ShowAlertFuntion());
-        return map;
-       }
+		map.put("showToast", new ShowToastFuntion());
+		map.put("showAlert", new ShowAlertFuntion());
+		return map;
+	}
 
 }
