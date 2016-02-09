@@ -2,10 +2,8 @@ package com.gogames.ane;
 
 import com.adobe.fre.FREContext;
 import com.adobe.fre.FREExtension;
-import com.vk.sdk.VKSdk;
 
 import android.util.Log;
-import kabkasik.trac;
 
 public class AneVk implements FREExtension{
 
@@ -22,8 +20,6 @@ public class AneVk implements FREExtension{
 
 	@Override
 	public void initialize() {
-		Log.i("kabkasik", "lkjkljljljk");
-		Log.i("kabkasik", trac.TEXT);
 		Log.i("Notification Extension", "Toast OK");
 		// TODO Auto-generated method stub
 		
