@@ -8,5 +8,4 @@
 		<item name="android:windowIsFloating">true</item>
 		<item name="android:backgroundDimEnabled">false</item>
 	</style>
-	<integer name="com_vk_sdk_AppId">5282890</integer> 
 </resources>

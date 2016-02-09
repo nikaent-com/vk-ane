@@ -11,6 +11,7 @@ public class test_vk_ane extends Sprite {
         textField.text = "Hello, World";
         addChild(textField);
         ANE.init();
+        ANE.showToast("ssss");
         ANE.showAlert("Test Title", "Text........")
     }
 }

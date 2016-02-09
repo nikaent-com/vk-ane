@@ -3,6 +3,7 @@ package com.gogames.ane;
 import com.adobe.fre.FREContext;
 import com.adobe.fre.FREFunction;
 import com.adobe.fre.FREObject;
+import com.vk.sdk.VKSdk;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -13,6 +14,9 @@ public class ShowAlertFuntion implements FREFunction {
 	@Override
 	public FREObject call(FREContext arg0, FREObject[] arg1) {
 		 try {
+			 
+			 VKSdk.initialize(arg0.getActivity()).withPayments();
+			 
              String alertTitle = arg1[0].getAsString();
              String alertText = arg1[1].getAsString();
              

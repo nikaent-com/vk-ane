@@ -1,7 +1,10 @@
 <?xml version="1.0"?>
 <platform xmlns="http://ns.adobe.com/air/extension/18.0">
 	<packagedDependencies>
+		<packagedDependency>kabkasik.jar</packagedDependency>
+		<packagedDependency>vk_sdk.jar</packagedDependency>
 		<packagedDependency>classes.jar</packagedDependency>
+		<packagedDependency>internal_impl-23.0.0.jar</packagedDependency>
 	</packagedDependencies>
 	<packagedResources>
 		<packagedResource>
