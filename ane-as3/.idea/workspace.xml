@@ -23,21 +23,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ANE.as" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ANE.as" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/gogames/ane/ANE.as">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6196581">
-              <caret line="29" column="17" selection-start-line="29" selection-start-column="17" selection-end-line="29" selection-end-column="17" />
-              <folding />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="9" column="29" selection-start-line="9" selection-start-column="29" selection-end-line="9" selection-end-column="29" />
+              <folding>
+                <element signature="e#26#58#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="VK.as" pinned="false" current-in-tab="false">
+      <file leaf-file-name="VK.as" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/gogames/vk/VK.as">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="34" column="30" selection-start-line="34" selection-start-column="30" selection-end-line="34" selection-end-column="30" />
+            <state vertical-scroll-proportion="0.33760685">
+              <caret line="23" column="44" selection-start-line="23" selection-start-column="44" selection-end-line="23" selection-end-column="44" />
               <folding>
                 <element signature="e#75#102#0" expanded="true" />
               </folding>
@@ -49,7 +51,7 @@
         <entry file="file://$PROJECT_DIR$/src/com/gogames/vk/model/VKEvent.as">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="6" column="8" selection-start-line="6" selection-start-column="8" selection-end-line="6" selection-end-column="8" />
+              <caret line="12" column="20" selection-start-line="12" selection-start-column="20" selection-end-line="12" selection-end-column="20" />
               <folding />
             </state>
           </provider>
@@ -79,7 +81,7 @@
         <entry file="jar://$PROJECT_DIR$/../../sdk/air18/frameworks/libs/air/airglobal.swc!/library.swf">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="11396" column="38" selection-start-line="11396" selection-start-column="38" selection-end-line="11396" selection-end-column="38" />
+              <caret line="1817" column="13" selection-start-line="1817" selection-start-column="13" selection-end-line="1817" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -106,10 +108,10 @@
         <option value="$PROJECT_DIR$/src/com/gogames/ane/vk/Scope.as" />
         <option value="$PROJECT_DIR$/src/com/gogames/vk/model/Scope.as" />
         <option value="$PROJECT_DIR$/src/com/gogames/vk/model/Error.as" />
-        <option value="$PROJECT_DIR$/src/com/gogames/vk/model/VKEvent.as" />
         <option value="$PROJECT_DIR$/src/com/gogames/vk/model/ErrorMessage.as" />
-        <option value="$PROJECT_DIR$/src/com/gogames/vk/VK.as" />
         <option value="$PROJECT_DIR$/src/com/gogames/ane/ANE.as" />
+        <option value="$PROJECT_DIR$/src/com/gogames/vk/model/VKEvent.as" />
+        <option value="$PROJECT_DIR$/src/com/gogames/vk/VK.as" />
       </list>
     </option>
   </component>
@@ -553,7 +555,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="11721000" />
+    <option name="totallyTimeSpent" value="12710000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="6" />
@@ -614,7 +616,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#26#58#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -622,22 +626,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="11396" column="38" selection-start-line="11396" selection-start-column="38" selection-end-line="11396" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/../../sdk/air18/frameworks/libs/air/airglobal.swc!/library.swf">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="11396" column="38" selection-start-line="11396" selection-start-column="38" selection-end-line="11396" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/gogames/vk/model/VKEvent.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="6" column="8" selection-start-line="6" selection-start-column="8" selection-end-line="6" selection-end-column="8" />
           <folding />
         </state>
       </provider>
@@ -658,21 +646,39 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/gogames/vk/VK.as">
+    <entry file="file://$PROJECT_DIR$/src/com/gogames/ane/ANE.as">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="34" column="30" selection-start-line="34" selection-start-column="30" selection-end-line="34" selection-end-column="30" />
+          <caret line="9" column="29" selection-start-line="9" selection-start-column="29" selection-end-line="9" selection-end-column="29" />
           <folding>
-            <element signature="e#75#102#0" expanded="true" />
+            <element signature="e#26#58#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/gogames/ane/ANE.as">
+    <entry file="jar://$PROJECT_DIR$/../../sdk/air18/frameworks/libs/air/airglobal.swc!/library.swf">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6196581">
-          <caret line="29" column="17" selection-start-line="29" selection-start-column="17" selection-end-line="29" selection-end-column="17" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1817" column="13" selection-start-line="1817" selection-start-column="13" selection-end-line="1817" selection-end-column="13" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/gogames/vk/model/VKEvent.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="12" column="20" selection-start-line="12" selection-start-column="20" selection-end-line="12" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/gogames/vk/VK.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33760685">
+          <caret line="23" column="44" selection-start-line="23" selection-start-column="44" selection-end-line="23" selection-end-column="44" />
+          <folding>
+            <element signature="e#75#102#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

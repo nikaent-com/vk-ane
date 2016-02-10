@@ -239,6 +239,7 @@
                 <!--<uses-feature android:required="true" android:name="android.hardware.touchscreen.multitouch"/>-->
                 <application android:enabled="true">
                     <activity android:name="com.vk.sdk.VKServiceActivity" android:label="ServiceActivity"/>
+                    <activity android:name="com.gogames.ane.activity.AuthActivity" android:label="AuthActivity"/>
                     <activity android:excludeFromRecents="false">
                         <intent-filter>
                             <action android:name="android.intent.action.MAIN"/>

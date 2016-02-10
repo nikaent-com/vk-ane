@@ -6,12 +6,15 @@ import com.adobe.fre.FREInvalidObjectException;
 import com.adobe.fre.FREObject;
 import com.adobe.fre.FRETypeMismatchException;
 import com.adobe.fre.FREWrongThreadException;
+import com.gogames.ane.activity.AuthActivity;
 import com.google.gson.Gson;
-import com.vk.sdk.VKSdk;
 
+import android.content.Intent;
 import android.util.Log;
 
 public class Login implements FREFunction {
+	static public String[] scope;
+	static public FREContext context;
 	@Override
 	public FREObject call(FREContext arg0, FREObject[] arg1) {
 		Log.i("ANE VK", "VK login");
@@ -32,8 +35,11 @@ public class Login implements FREFunction {
 			e.printStackTrace();
 		}
 		Log.i("ANE VK", ab);
-		String[] scope = new Gson().fromJson(ab, String[].class);
-		VKSdk.login(arg0.getActivity(), scope);
+		scope = new Gson().fromJson(ab, String[].class);
+		context = arg0;
+		
+		Intent intent = new Intent(arg0.getActivity(), AuthActivity.class);
+		arg0.getActivity().startActivityForResult(intent, 1);
 
 		return null;
 	}

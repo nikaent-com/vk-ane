@@ -4,6 +4,7 @@
 package com.gogames.vk {
 import com.gogames.ane.ANE;
 import com.gogames.vk.model.ErrorMessage;
+import com.gogames.vk.model.VKEvent;
 
 import flash.events.EventDispatcher;
 
@@ -16,12 +17,21 @@ public class VK extends EventDispatcher {
         if (_inst) throw new Error(ErrorMessage.SINGLETON);
 
         _inst = this;
-        _ane = new ANE();
+        _ane = new ANE(onStatus);
         _ane.init();
     }
 
+    private function onStatus(code:String, data:String):void {
+        switch (code){
+            case VKEvent.AUTH_FAILED:
+            case VKEvent.AUTH_SUCCESSFUL:
+                    this.dispatchEvent(new VKEvent(code));
+                break;
+        }
+    }
+
     public static function getInstance():VK {
-        if(!_inst) new VK();
+        if (!_inst) new VK();
         return _inst;
     }
 

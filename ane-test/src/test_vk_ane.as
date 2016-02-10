@@ -3,6 +3,7 @@ package {
 
 import com.gogames.vk.VK;
 import com.gogames.vk.model.Scope;
+import com.gogames.vk.model.VKEvent;
 
 import flash.display.Sprite;
 import flash.events.Event;
@@ -12,6 +13,23 @@ import flash.text.TextFormat;
 
 public class test_vk_ane extends Sprite {
     public function test_vk_ane() {
+        var format1:TextFormat = new TextFormat();
+        format1.font = "Arial";
+        format1.size = 24;
+        var tf:TextField = new TextField();
+        tf.background = true;
+        tf.backgroundColor = 0xAAAAAA;
+        tf.setTextFormat(format1);
+        tf.x = 200;
+        addChild(tf);
+
+        VK.getInstance().addEventListener(VKEvent.AUTH_FAILED, function (e:VKEvent):void {
+            tf.text = VKEvent.AUTH_FAILED;
+        });
+        VK.getInstance().addEventListener(VKEvent.AUTH_SUCCESSFUL, function (e:VKEvent):void {
+            tf.text = VKEvent.AUTH_SUCCESSFUL;
+        });
+
         var buttons:Vector.<ButtonVk> = new Vector.<ButtonVk>();
         buttons.push(new ButtonVk("login", function (e:Event):void {
             VK.login(Scope.FRIENDS, Scope.NOTIFICATIONS, Scope.STATUS);
@@ -30,8 +48,8 @@ public class test_vk_ane extends Sprite {
     private function setText(name:String, onclick:Function = null, x:int = 0, y:int = 0):TextField {
 
         var format1:TextFormat = new TextFormat();
-        format1.font="Arial";
-        format1.size=24;
+        format1.font = "Arial";
+        format1.size = 24;
 
         var textfield:TextField = new TextField();
         textfield.text = name;
