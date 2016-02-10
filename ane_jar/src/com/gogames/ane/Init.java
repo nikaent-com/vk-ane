@@ -20,7 +20,6 @@ public class Init implements FREFunction {
 		 String[] fingerprints = VKUtil.getCertificateFingerprint(toastContext, toastContext.getPackageName());
 		 
 		 for (int j = 0; j < fingerprints.length; j++) {
-		 	System.out.println(fingerprints[j]);
 		 	Log.i("fingerprint", fingerprints[j]);
 		 }
 		 

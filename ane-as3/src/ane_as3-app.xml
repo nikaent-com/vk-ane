@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <application xmlns="http://ns.adobe.com/air/application/3.2">
-    <id>ane-as3</id>
+    <id>ane_as3</id>
     <versionNumber>1.0.0</versionNumber>
     <filename>ane_as3</filename>
     <description></description>
@@ -33,4 +33,8 @@
     <customUpdateUI>false</customUpdateUI>
     <allowBrowserInvocation>false</allowBrowserInvocation>
     <icon></icon>
+    <android>
+        <manifestAdditions><![CDATA[<manifest></manifest>]]></manifestAdditions>
+    </android>
+    <versionLabel></versionLabel>
 </application>

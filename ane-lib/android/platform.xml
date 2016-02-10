@@ -4,6 +4,7 @@
 		<packagedDependency>vk_sdk.jar</packagedDependency>
 		<packagedDependency>classes.jar</packagedDependency>
 		<packagedDependency>internal_impl-23.0.0.jar</packagedDependency>
+		<packagedDependency>gson-2.5.jar</packagedDependency>
 	</packagedDependencies>
 	<packagedResources>
 		<packagedResource>
