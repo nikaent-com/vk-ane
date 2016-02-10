@@ -25,6 +25,7 @@ public class VK extends EventDispatcher {
         switch (code){
             case VKEvent.AUTH_FAILED:
             case VKEvent.AUTH_SUCCESSFUL:
+            case VKEvent.TOKEN_INVALID:
                     this.dispatchEvent(new VKEvent(code));
                 break;
         }

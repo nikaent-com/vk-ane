@@ -7,6 +7,8 @@ import com.adobe.fre.FREContext;
 import com.adobe.fre.FREFunction;
 
 public class NotificationExtensionContext extends FREContext {
+	private static FREContext _context;
+	
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
@@ -20,6 +22,10 @@ public class NotificationExtensionContext extends FREContext {
 		map.put("login", new Login());
 		map.put("logout", new Logout());
 		return map;
+	}
+	
+	public static FREContext getContext(){
+		return _context;
 	}
 
 }

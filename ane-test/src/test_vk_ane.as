@@ -29,6 +29,9 @@ public class test_vk_ane extends Sprite {
         VK.getInstance().addEventListener(VKEvent.AUTH_SUCCESSFUL, function (e:VKEvent):void {
             tf.text = VKEvent.AUTH_SUCCESSFUL;
         });
+        VK.getInstance().addEventListener(VKEvent.TOKEN_INVALID, function (e:VKEvent):void {
+            tf.text = VKEvent.TOKEN_INVALID;
+        });
 
         var buttons:Vector.<ButtonVk> = new Vector.<ButtonVk>();
         buttons.push(new ButtonVk("login", function (e:Event):void {
