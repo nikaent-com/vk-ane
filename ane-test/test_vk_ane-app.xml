@@ -240,6 +240,7 @@
                 <application android:enabled="true">
                     <activity android:name="com.vk.sdk.VKServiceActivity" android:label="ServiceActivity"/>
                     <activity android:name="com.gogames.ane.activity.AuthActivity" android:label="AuthActivity"/>
+                    <activity android:name="com.gogames.ane.activity.ApiCallActivity" android:label="ApiCallActivity"/>
                     <activity android:excludeFromRecents="false">
                         <intent-filter>
                             <action android:name="android.intent.action.MAIN"/>

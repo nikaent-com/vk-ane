@@ -17,6 +17,7 @@ public class AuthActivity extends Activity {
 	private static String AUTH_FAILED 		= "FAILED";
 	
 	protected void onCreate(Bundle savedInstanceState) {
+		Log.w("ANE VK", "onCreate ApiCallActivity");
 		super.onCreate(savedInstanceState);
 		Activity activity = this;
 		VKSdk.login(activity, Login.scope);

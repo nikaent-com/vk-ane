@@ -7,6 +7,8 @@ import android.util.Log;
 
 public class AneVk implements FREExtension{
 
+	public static String TAG = "ANE VK";
+	
 	@Override
 	public FREContext createContext(String arg0) {
 		return new NotificationExtensionContext();

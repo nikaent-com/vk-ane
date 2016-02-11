@@ -18,7 +18,7 @@ public class Init implements FREFunction {
 		@Override
 		public void onVKAccessTokenChanged(VKAccessToken oldToken, VKAccessToken newToken) {
 			if (newToken == null) {
-				NotificationExtensionContext.getContext().dispatchStatusEventAsync(TOKEN_INVALID, "");
+				//NotificationExtensionContext.getContext().dispatchStatusEventAsync(TOKEN_INVALID, "");
 				Log.i("ANE VK", "token invalid");
 			}
 		}

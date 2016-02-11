@@ -49,5 +49,19 @@ public class ANE {
         if (_context)
             _context.call("logout");
     }
+    public function usersGet():void{
+        if (_context)
+            _context.call("user");
+    }
+
+    public function isLoggedIn():Boolean{
+        if(_context)
+            return _context.call("isLoggedIn");
+        return false;
+    }
+
+    public function apiCall(method:int, params:String):void{
+        _context.call("apiCall", method, params)
+    }
 }
 }

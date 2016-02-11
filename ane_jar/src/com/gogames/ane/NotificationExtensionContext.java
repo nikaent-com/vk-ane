@@ -21,6 +21,8 @@ public class NotificationExtensionContext extends FREContext {
 		map.put("init", new Init());
 		map.put("login", new Login());
 		map.put("logout", new Logout());
+		map.put("apiCall", new ApiCall());
+		map.put("isLoggedIn", new IsLoggedIn());
 		return map;
 	}
 	

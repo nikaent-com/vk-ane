@@ -35,10 +35,19 @@ public class test_vk_ane extends Sprite {
 
         var buttons:Vector.<ButtonVk> = new Vector.<ButtonVk>();
         buttons.push(new ButtonVk("login", function (e:Event):void {
-            VK.login(Scope.FRIENDS, Scope.NOTIFICATIONS, Scope.STATUS);
+            VK.login(Scope.FRIENDS, Scope.NOTIFICATIONS, Scope.STATUS, Scope.ADS, Scope.AUDIO, Scope.DOCS, Scope.EMAIL, Scope.GROUPS, Scope.MESSAGES, Scope.NOHTTPS, Scope.NOTES, Scope.OFFERS, Scope.OFFLINE, Scope.PAGES, Scope.PHOTOS, Scope.QUESTIONS, Scope.STATS, Scope.STATUS, Scope.VIDEO, Scope.WALL);
         }));
         buttons.push(new ButtonVk("logout", function (e:Event):void {
             VK.logout();
+        }));
+        buttons.push(new ButtonVk("users.get()", function (e:Event):void {
+            VK.usersGet();
+        }));
+        buttons.push(new ButtonVk("isLoggedIn()", function (e:Event):void {
+            tf.text = VK.isLoggedIn()?"LoggenIn":"LoggenOut";
+        }));
+        buttons.push(new ButtonVk("apiCall()", function (e:Event):void {
+            VK.apiCall(2,"ss");
         }));
 
         var aLast:TextField;

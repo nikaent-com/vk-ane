@@ -22,11 +22,11 @@ public class VK extends EventDispatcher {
     }
 
     private function onStatus(code:String, data:String):void {
-        switch (code){
+        switch (code) {
             case VKEvent.AUTH_FAILED:
             case VKEvent.AUTH_SUCCESSFUL:
             case VKEvent.TOKEN_INVALID:
-                    this.dispatchEvent(new VKEvent(code));
+                this.dispatchEvent(new VKEvent(code));
                 break;
         }
     }
@@ -49,5 +49,18 @@ public class VK extends EventDispatcher {
     public static function logout():void {
         getInstance()._ane.logout();
     }
+
+    public static function usersGet():void {
+        getInstance()._ane.usersGet();
+    }
+
+    public static function isLoggedIn():Boolean {
+        return getInstance()._ane.isLoggedIn();
+    }
+
+    public static function apiCall(method:int, params:String):void {
+        return getInstance()._ane.apiCall(method, params);
+    }
+
 }
 }
