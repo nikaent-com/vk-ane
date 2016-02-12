@@ -35,33 +35,15 @@ public class ANE {
             _context.call("showAlert", title, text);
     }
 
-    public function login(scope:Array):void {
-        trace("ane login in");
-        if (_context) {
-            trace("ane login send");
-            _context.call("login", JSON.stringify(scope));
-            trace("ane login", scope);
-            trace("ane login sended");
+    public function call(functionName : String, ...params):Object{
+        if(params.length==0){
+            return _context.call(functionName);
+        }else if(params.length==1){
+            return _context.call(functionName, params[0]);
+        }else if(params.length==2){
+            return _context.call(functionName, params[0], params[1]);
         }
-    }
-
-    public function logout():void {
-        if (_context)
-            _context.call("logout");
-    }
-    public function usersGet():void{
-        if (_context)
-            _context.call("user");
-    }
-
-    public function isLoggedIn():Boolean{
-        if(_context)
-            return _context.call("isLoggedIn");
-        return false;
-    }
-
-    public function apiCall(method:int, params:String):void{
-        _context.call("apiCall", method, params)
+        return null;
     }
 }
 }

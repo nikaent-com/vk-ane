@@ -42,7 +42,7 @@ public class ApiCallActivity extends Activity {
 			return;
 		myRequest = request;
 		Log.i("ANE VK", "executeWithListener");
-		request.executeWithListener(mRequestListener1);
+		request.executeWithListener(mRequestListener);
 	}
 
 	protected void onSaveInstanceState(Bundle outState) {
@@ -85,21 +85,6 @@ public class ApiCallActivity extends Activity {
 		public void attemptFailed(VKRequest request, int attemptNumber, int totalAttempts) {
 			Log.i(AneVk.TAG, "attemptFailed");
 			Log.i(AneVk.TAG, String.format("Attempt %d/%d failed\n", attemptNumber, totalAttempts));
-		}
-	};
-
-	VKRequestListener mRequestListener1 = new VKRequest.VKRequestListener() {
-		public void onComplete(VKResponse response) {
-			Log.i(AneVk.TAG, "onComplete");
-			Log.i(AneVk.TAG, response.responseString);
-		}
-
-		public void onError(VKError error) {
-			if (error.apiError != null) {
-				Log.i(AneVk.TAG, "onError");
-			} else {
-				Log.i(AneVk.TAG, "onError apiError"+error.errorMessage);
-			}
 		}
 	};
 

@@ -26,5 +26,9 @@ public class AneVk implements FREExtension{
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public static void log(String message){
+		Log.i(AneVk.TAG, message);
+	}
 
 }

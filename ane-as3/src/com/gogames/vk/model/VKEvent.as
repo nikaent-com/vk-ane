@@ -10,8 +10,11 @@ public class VKEvent extends Event {
     public static const AUTH_FAILED     :String = "FAILED";
     public static const TOKEN_INVALID   :String = "TOKEN_INVALID";
 
-    public function VKEvent(type:String) {
+    public var data : String = "";
+
+    public function VKEvent(type:String, data:String = "") {
         super(type);
+        this.data = data;
     }
 }
 }

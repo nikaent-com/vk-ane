@@ -66,15 +66,60 @@ public class ApiCall implements FREFunction {
 
 	public static final int TARGET_GROUP = 60479154;
 	public static final int TARGET_ALBUM = 181808365;
-	
-	private Activity _activity = null;
 
+	private Activity _activity = null;
+	private FREContext _context = null;
+
+	private VKRequestListener _requestListener = new VKRequestListener() {
+		@Override
+		public void onComplete(VKResponse response) {
+			long requestId = response.request.registerObject();
+			String requestData = response.json.toString();
+			
+			AneVk.log("onComplete");
+			AneVk.log("request in: " + requestId);
+			AneVk.log(requestData);
+			
+			getContext().dispatchStatusEventAsync("response" + requestId, requestData);
+		}
+
+		@Override
+		public void onError(VKError error) {
+			long requestId = error.request.registerObject();
+			
+			AneVk.log("onError");
+			AneVk.log("request in: " + requestId);
+			AneVk.log(error.errorMessage);
+			
+			getContext().dispatchStatusEventAsync("responseError" + requestId, error.errorMessage);
+		}
+
+		@Override
+		public void onProgress(VKRequest.VKProgressType progressType, long bytesLoaded, long bytesTotal) {
+			// you can show progress of the request if you want
+		}
+
+		@Override
+		public void attemptFailed(VKRequest request, int attemptNumber, int totalAttempts) {
+			long requestId = request.registerObject();
+			
+			AneVk.log("attemptFailed");
+			AneVk.log("request in: " + requestId);
+			
+			getContext().dispatchStatusEventAsync("responseFailed" + requestId, String.format("Attempt %d/%d failed\n", attemptNumber, totalAttempts));
+		}
+	};
+	
+	
 	@Override
 	public FREObject call(FREContext arg0, FREObject[] arg1) {
 		Log.i("ANE VK", "ApiCall");
 
+		_context = arg0;
 		_activity = arg0.getActivity();
-		
+
+		FREObject result = null;
+
 		int method = 0;
 		String params = "";
 		try {
@@ -94,6 +139,7 @@ public class ApiCall implements FREFunction {
 			e.printStackTrace();
 		}
 
+		AneVk.log("call: " + method);
 		switch (method) {
 		case MAKE_REQUEST: {
 			makeRequest();
@@ -101,17 +147,18 @@ public class ApiCall implements FREFunction {
 			break;
 		case USERS_GET: {
 			Log.i("ANE VK", "USERS_GET");
-			VKRequest request = VKApi.users()
-					.get(VKParameters.from(VKApiConst.FIELDS,
-							"id,first_name,last_name,sex,bdate,city,country,photo_50,photo_100,"
-									+ "photo_200_orig,photo_200,photo_400_orig,photo_max,photo_max_orig,online,"
-									+ "online_mobile,lists,domain,has_mobile,contacts,connections,site,education,"
-									+ "universities,schools,can_post,can_see_all_posts,can_see_audio,can_write_private_message,"
-									+ "status,last_seen,common_count,relation,relatives,counters"));
+			VKRequest request = VKApi.users().get(VKParameters.from(VKApiConst.FIELDS, params));
 			request.secure = false;
 			request.useSystemLanguage = false;
-			//request.executeWithListener(mRequestListener1);
-			startApiCall(request);
+			request.executeWithListener(_requestListener);
+			AneVk.log("request out: " + request.registerObject());
+			try {
+				result = FREObject.newObject(""+request.registerObject());
+			} catch (FREWrongThreadException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 		}
 			break;
 		case FRIENDS_GET:
@@ -217,12 +264,12 @@ public class ApiCall implements FREFunction {
 			break;
 		}
 
-		return null;
+		return result;
 	}
 
 	private void startApiCall(VKRequest request) {
 		Log.w("ANE VK", "startApiCall");
-		
+
 		Intent i = new Intent(getActivity(), ApiCallActivity.class);
 		i.putExtra("request", request.registerObject());
 		getActivity().startActivityForResult(i, 1);
@@ -230,8 +277,7 @@ public class ApiCall implements FREFunction {
 	}
 
 	private void showError(VKError error) {
-		new AlertDialog.Builder(getActivity()).setMessage(error.toString())
-				.setPositiveButton("OK", null).show();
+		new AlertDialog.Builder(getActivity()).setMessage(error.toString()).setPositiveButton("OK", null).show();
 		if (error.httpError != null) {
 			Log.w("Test", "Error in request or upload", error.httpError);
 		}
@@ -239,20 +285,19 @@ public class ApiCall implements FREFunction {
 
 	private Bitmap getPhoto() {
 		try {
-			return BitmapFactory.decodeStream(
-					getActivity().getAssets().open("android.jpg"));
+			return BitmapFactory.decodeStream(getActivity().getAssets().open("android.jpg"));
 		} catch (IOException e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
-	
-	private Activity getActivity(){
+
+	private Activity getActivity() {
 		return _activity;
 	}
 
-	private FREContext getContext(){
-		return NotificationExtensionContext.getContext();
+	private FREContext getContext() {
+		return _context;
 	}
 
 	private static void recycleBitmap(@Nullable final Bitmap bitmap) {
@@ -286,72 +331,50 @@ public class ApiCall implements FREFunction {
 	}
 
 	private void makePost(VKAttachments attachments, String message) {
-		/*VKRequest post = VKApi.wall().post(VKParameters.from(VKApiConst.OWNER_ID, "-" + TARGET_GROUP,
-				VKApiConst.ATTACHMENTS, attachments, VKApiConst.MESSAGE, message));
-		post.setModelClass(VKWallPostResult.class);
-		post.executeWithListener(new VKRequestListener() {
-			@Override
-			public void onComplete(VKResponse response) {
-				if (isAdded()) {
-					VKWallPostResult result = (VKWallPostResult) response.parsedModel;
-					Intent i = new Intent(Intent.ACTION_VIEW,
-							Uri.parse(String.format("https://vk.com/wall-%d_%s", TARGET_GROUP, result.post_id)));
-					startActivity(i);
-				}
-			}
-
-			@Override
-			public void onError(VKError error) {
-				showError(error.apiError != null ? error.apiError : error);
-			}
-		});*/
+		/*
+		 * VKRequest post =
+		 * VKApi.wall().post(VKParameters.from(VKApiConst.OWNER_ID, "-" +
+		 * TARGET_GROUP, VKApiConst.ATTACHMENTS, attachments,
+		 * VKApiConst.MESSAGE, message));
+		 * post.setModelClass(VKWallPostResult.class);
+		 * post.executeWithListener(new VKRequestListener() {
+		 * 
+		 * @Override public void onComplete(VKResponse response) { if
+		 * (isAdded()) { VKWallPostResult result = (VKWallPostResult)
+		 * response.parsedModel; Intent i = new Intent(Intent.ACTION_VIEW,
+		 * Uri.parse(String.format("https://vk.com/wall-%d_%s", TARGET_GROUP,
+		 * result.post_id))); startActivity(i); } }
+		 * 
+		 * @Override public void onError(VKError error) {
+		 * showError(error.apiError != null ? error.apiError : error); } });
+		 */
 	}
 
 	private void makeRequest() {
-		/*VKRequest request = new VKRequest("apps.getFriendsList", VKParameters.from("extended", 1, "type", "request"));
-		request.executeWithListener(new VKRequestListener() {
-			@Override
-			public void onComplete(VKResponse response) {
-				final Context context = getContext();
-				if (context == null || !isAdded()) {
-					return;
-				}
-				try {
-					JSONArray jsonArray = response.json.getJSONObject("response").getJSONArray("items");
-					int length = jsonArray.length();
-					final VKApiUser[] vkApiUsers = new VKApiUser[length];
-					CharSequence[] vkApiUsersNames = new CharSequence[length];
-					for (int i = 0; i < length; i++) {
-						VKApiUser user = new VKApiUser(jsonArray.getJSONObject(i));
-						vkApiUsers[i] = user;
-						vkApiUsersNames[i] = user.first_name + " " + user.last_name;
-					}
-					new AlertDialog.Builder(context).setTitle(R.string.send_request_title)
-							.setItems(vkApiUsersNames, new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							startApiCall(new VKRequest("apps.sendRequest",
-									VKParameters.from("user_id", vkApiUsers[which].id, "type", "request")));
-						}
-					}).create().show();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});*/
-		
-	}
-	VKRequestListener mRequestListener1 = new VKRequest.VKRequestListener() {
-		public void onComplete(VKResponse response) {
-			Log.i(AneVk.TAG, "onComplete");
-		}
+		/*
+		 * VKRequest request = new VKRequest("apps.getFriendsList",
+		 * VKParameters.from("extended", 1, "type", "request"));
+		 * request.executeWithListener(new VKRequestListener() {
+		 * 
+		 * @Override public void onComplete(VKResponse response) { final Context
+		 * context = getContext(); if (context == null || !isAdded()) { return;
+		 * } try { JSONArray jsonArray =
+		 * response.json.getJSONObject("response").getJSONArray("items"); int
+		 * length = jsonArray.length(); final VKApiUser[] vkApiUsers = new
+		 * VKApiUser[length]; CharSequence[] vkApiUsersNames = new
+		 * CharSequence[length]; for (int i = 0; i < length; i++) { VKApiUser
+		 * user = new VKApiUser(jsonArray.getJSONObject(i)); vkApiUsers[i] =
+		 * user; vkApiUsersNames[i] = user.first_name + " " + user.last_name; }
+		 * new
+		 * AlertDialog.Builder(context).setTitle(R.string.send_request_title)
+		 * .setItems(vkApiUsersNames, new DialogInterface.OnClickListener() {
+		 * 
+		 * @Override public void onClick(DialogInterface dialog, int which) {
+		 * startApiCall(new VKRequest("apps.sendRequest",
+		 * VKParameters.from("user_id", vkApiUsers[which].id, "type",
+		 * "request"))); } }).create().show(); } catch (Exception e) {
+		 * e.printStackTrace(); } } });
+		 */
 
-		public void onError(VKError error) {
-			if (error.apiError != null) {
-				Log.i(AneVk.TAG, "onError");
-			} else {
-				Log.i(AneVk.TAG, "onError apiError"+error.errorMessage);
-			}
-		}
-	};
+	}
 }
