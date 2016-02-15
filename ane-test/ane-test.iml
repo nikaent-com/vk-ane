@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="Flex" version="4">
-  <component name="FlexBuildConfigurationManager" active="ane-test">
+  <component name="FlexBuildConfigurationManager" active="com.gogames.ane">
     <configurations>
-      <configuration name="ane-test" target-platform="Mobile" pure-as="true" main-class="test_vk_ane" output-file="test_vk_ane.swf" output-folder="$MODULE_DIR$/out/production/ane-test">
+      <configuration name="com.gogames.ane" target-platform="Mobile" pure-as="true" main-class="test_vk_ane" output-file="test_vk_ane.swf" output-folder="$MODULE_DIR$/out/production/ane-test">
         <dependencies target-player="19.0">
           <entries>
             <entry library-id="796e4212-9dd0-4b2c-927d-f797b5e97866">
@@ -13,8 +13,10 @@
         </dependencies>
         <compiler-options />
         <packaging-air-desktop />
-        <packaging-android enabled="true" use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/test_vk_ane-app.xml" package-file-name="test_vk_ane" />
-        <packaging-ios package-file-name="test_vk_ane" />
+        <packaging-android enabled="true" use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/test_vk_ane_ios-app.xml" package-file-name="test_vk_ane" />
+        <packaging-ios enabled="true" use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/test_vk_ane_ios-app.xml" package-file-name="com.gogames.ane">
+          <AirSigningOptions keystore-path="$USER_HOME$/Downloads/Сертификаты.p12" provisioning-profile-path="$USER_HOME$/Downloads/ane_provision.mobileprovision" />
+        </packaging-ios>
       </configuration>
     </configurations>
     <compiler-options />

@@ -1,1 +1,1 @@
-/Users/alekseykabanov/Projects/sdk/air18/bin/./adt -package -target ane vk_ane.ane extension.xml -swc ane_as3.swc -platform Android-ARM -C android . -platform default -C default
+/Users/alekseykabanov/Projects/sdk/air18/bin/./adt -package -target ane vk_ane.ane extension.xml -swc ane_as3.swc -platform Android-ARM -C android . -platform iPhone-ARM -C iphone . -platform default -C default

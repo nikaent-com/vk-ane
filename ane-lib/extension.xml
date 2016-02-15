@@ -9,5 +9,11 @@
                                 <finalizer>com.gogames.ane.AneVk</finalizer>
                         </applicationDeployment>
                 </platform>
+                <platform name="iPhone-ARM">
+                        <applicationDeployment>
+                                <nativeLibrary>libane.a</nativeLibrary>
+                                <initializer>VolumeExtensionInitializer</initializer>
+                        </applicationDeployment>
+                </platform>
         </platforms>
 </extension>
