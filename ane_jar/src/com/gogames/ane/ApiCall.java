@@ -75,22 +75,22 @@ public class ApiCall implements FREFunction {
 		public void onComplete(VKResponse response) {
 			long requestId = response.request.registerObject();
 			String requestData = response.json.toString();
-			
+
 			AneVk.log("onComplete");
 			AneVk.log("request in: " + requestId);
 			AneVk.log(requestData);
-			
+
 			getContext().dispatchStatusEventAsync("response" + requestId, requestData);
 		}
 
 		@Override
 		public void onError(VKError error) {
 			long requestId = error.request.registerObject();
-			
+
 			AneVk.log("onError");
 			AneVk.log("request in: " + requestId);
 			AneVk.log(error.errorMessage);
-			
+
 			getContext().dispatchStatusEventAsync("responseError" + requestId, error.errorMessage);
 		}
 
@@ -102,15 +102,15 @@ public class ApiCall implements FREFunction {
 		@Override
 		public void attemptFailed(VKRequest request, int attemptNumber, int totalAttempts) {
 			long requestId = request.registerObject();
-			
+
 			AneVk.log("attemptFailed");
 			AneVk.log("request in: " + requestId);
-			
-			getContext().dispatchStatusEventAsync("responseFailed" + requestId, String.format("Attempt %d/%d failed\n", attemptNumber, totalAttempts));
+
+			getContext().dispatchStatusEventAsync("responseFailed" + requestId,
+					String.format("Attempt %d/%d failed\n", attemptNumber, totalAttempts));
 		}
 	};
-	
-	
+
 	@Override
 	public FREObject call(FREContext arg0, FREObject[] arg1) {
 		Log.i("ANE VK", "ApiCall");
@@ -146,33 +146,26 @@ public class ApiCall implements FREFunction {
 		}
 			break;
 		case USERS_GET: {
-			Log.i("ANE VK", "USERS_GET");
 			VKRequest request = VKApi.users().get(VKParameters.from(VKApiConst.FIELDS, params));
 			request.secure = false;
 			request.useSystemLanguage = false;
-			request.executeWithListener(_requestListener);
-			AneVk.log("request out: " + request.registerObject());
-			try {
-				result = FREObject.newObject(""+request.registerObject());
-			} catch (FREWrongThreadException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
+			
+			result = doRequest(request);
 		}
 			break;
 		case FRIENDS_GET:
-			startApiCall(VKApi.friends()
-					.get(VKParameters.from(VKApiConst.FIELDS, "id,first_name,last_name,sex,bdate,city")));
+			result = doRequest(VKApi.friends()
+					.get(VKParameters.from(VKApiConst.FIELDS, params)));
+			//params: "id,first_name,last_name,sex,bdate,city"
 			break;
 		case MESSAGES_GET:
-			startApiCall(VKApi.messages().get());
+			result = doRequest(VKApi.messages().get());
 			break;
 		case DIALOGS_GET:
-			startApiCall(VKApi.messages().getDialogs());
+			result = doRequest(VKApi.messages().getDialogs());
 			break;
 		case CAPTCHA_FORCE:
-			startApiCall(new VKApiCaptcha().force());
+			result = doRequest(new VKApiCaptcha().force());
 			break;
 		case UPLOAD_PHOTO: {
 			final Bitmap photo = getPhoto();
@@ -199,10 +192,10 @@ public class ApiCall implements FREFunction {
 			makePost(null, "Hello, friends!");
 			break;
 		case WALL_GETBYID:
-			startApiCall(VKApi.wall().getById(VKParameters.from(VKApiConst.POSTS, "1_45558")));
+			result = doRequest(VKApi.wall().getById(VKParameters.from(VKApiConst.POSTS, "1_45558")));
 			break;
 		case TEST_VALIDATION:
-			startApiCall(new VKRequest("account.testValidation"));
+			result = doRequest(new VKRequest("account.testValidation"));
 			break;
 		case TEST_SHARE: {
 
@@ -228,7 +221,7 @@ public class ApiCall implements FREFunction {
 		}
 			break;
 		case UPLOAD_DOC:
-			startApiCall(VKApi.docs().uploadDocRequest(getFile()));
+			result = doRequest(VKApi.docs().uploadDocRequest(getFile()));
 			break;
 		case UPLOAD_SEVERAL_PHOTOS_TO_WALL: {
 			final Bitmap photo = getPhoto();
@@ -265,6 +258,18 @@ public class ApiCall implements FREFunction {
 		}
 
 		return result;
+	}
+
+	private FREObject doRequest(VKRequest request) {
+		request.executeWithListener(_requestListener);
+		AneVk.log("request out: " + request.registerObject());
+		try {
+			return FREObject.newObject("" + request.registerObject());
+		} catch (FREWrongThreadException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	private void startApiCall(VKRequest request) {
@@ -351,30 +356,42 @@ public class ApiCall implements FREFunction {
 	}
 
 	private void makeRequest() {
+
 		/*
-		 * VKRequest request = new VKRequest("apps.getFriendsList",
-		 * VKParameters.from("extended", 1, "type", "request"));
-		 * request.executeWithListener(new VKRequestListener() {
-		 * 
-		 * @Override public void onComplete(VKResponse response) { final Context
-		 * context = getContext(); if (context == null || !isAdded()) { return;
-		 * } try { JSONArray jsonArray =
-		 * response.json.getJSONObject("response").getJSONArray("items"); int
-		 * length = jsonArray.length(); final VKApiUser[] vkApiUsers = new
-		 * VKApiUser[length]; CharSequence[] vkApiUsersNames = new
-		 * CharSequence[length]; for (int i = 0; i < length; i++) { VKApiUser
-		 * user = new VKApiUser(jsonArray.getJSONObject(i)); vkApiUsers[i] =
-		 * user; vkApiUsersNames[i] = user.first_name + " " + user.last_name; }
-		 * new
-		 * AlertDialog.Builder(context).setTitle(R.string.send_request_title)
-		 * .setItems(vkApiUsersNames, new DialogInterface.OnClickListener() {
-		 * 
-		 * @Override public void onClick(DialogInterface dialog, int which) {
-		 * startApiCall(new VKRequest("apps.sendRequest",
-		 * VKParameters.from("user_id", vkApiUsers[which].id, "type",
-		 * "request"))); } }).create().show(); } catch (Exception e) {
-		 * e.printStackTrace(); } } });
-		 */
+		VKRequest request = new VKRequest("apps.getFriendsList", VKParameters.from("extended", 1, "type", "request"));
+		request.executeWithListener(new VKRequestListener() {
+
+			@Override
+			public void onComplete(VKResponse response) {
+				FREContext context = getContext();
+				if (context == null || !isAdded()) {
+					return;
+				}
+				try {
+					JSONArray jsonArray = response.json.getJSONObject("response").getJSONArray("items");
+					int length = jsonArray.length();
+					final VKApiUser[] vkApiUsers = new VKApiUser[length];
+					CharSequence[] vkApiUsersNames = new CharSequence[length];
+					for (int i = 0; i < length; i++) {
+						VKApiUser user = new VKApiUser(jsonArray.getJSONObject(i));
+						vkApiUsers[i] = user;
+						vkApiUsersNames[i] = user.first_name + " " + user.last_name;
+					}
+					new AlertDialog.Builder(context).setTitle(R.string.send_request_title)
+							.setItems(vkApiUsersNames, new DialogInterface.OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							startApiCall(new VKRequest("apps.sendRequest",
+									VKParameters.from("user_id", vkApiUsers[which].id, "type", "request")));
+						}
+					}).create().show();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		*/
 
 	}
 }

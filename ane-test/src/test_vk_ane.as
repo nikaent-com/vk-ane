@@ -37,7 +37,7 @@ public class test_vk_ane extends Sprite {
 
         var buttons:Vector.<ButtonVk> = new Vector.<ButtonVk>();
         buttons.push(new ButtonVk("login", function (e:Event):void {
-            VK.login(Scope.FRIENDS, Scope.NOTIFICATIONS, Scope.STATUS, Scope.ADS, Scope.AUDIO, Scope.DOCS, Scope.EMAIL, Scope.GROUPS, Scope.MESSAGES, Scope.NOHTTPS, Scope.NOTES, Scope.OFFERS, Scope.OFFLINE, Scope.PAGES, Scope.PHOTOS, Scope.QUESTIONS, Scope.STATS, Scope.STATUS, Scope.VIDEO, Scope.WALL);
+            VK.login(Scope.FRIENDS, Scope.NOTIFICATIONS, Scope.STATUS, Scope.GROUPS, Scope.MESSAGES);
             //VK.login(Scope.FRIENDS, Scope.NOTIFICATIONS, Scope.STATUS);
         }));
         buttons.push(new ButtonVk("logout", function (e:Event):void {
@@ -47,7 +47,27 @@ public class test_vk_ane extends Sprite {
             tf.text = VK.isLoggedIn()?"LoggenIn":"LoggenOut";
         }));
         buttons.push(new ButtonVk("apiCall()", function (e:Event):void {
-            VK.apiCall(2,UserParam.all, function(str:String){
+            VK.apiCall(2,UserParam.all, function(str:String):void{
+                tf.text = str;
+            });
+        }));
+        buttons.push(new ButtonVk("method 3", function (e:Event):void {
+            VK.apiCall(3,"id,first_name,last_name,sex,bdate,city", function(str:String):void{
+                tf.text = str;
+            });
+        }));
+        buttons.push(new ButtonVk("method 4", function (e:Event):void {
+            VK.apiCall(4,"", function(str:String):void{
+                tf.text = str;
+            });
+        }));
+        buttons.push(new ButtonVk("method 5", function (e:Event):void {
+            VK.apiCall(5,"", function(str:String):void{
+                tf.text = str;
+            });
+        }));
+        buttons.push(new ButtonVk("method 6", function (e:Event):void {
+            VK.apiCall(6,"", function(str:String):void{
                 tf.text = str;
             });
         }));
