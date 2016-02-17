@@ -8,12 +8,17 @@
 
 #import "FlashRuntimeExtensions.h"
 #import <UIKit/UIKit.h>
-
+#import <VKSdk/VKSdk.h>
+#import "VKStartScreen.h"
 
 FREContext eventContext;
 
 FREObject init(FREContext ctx, void* funcData, uint32_t argc, FREObject argv[])
 {
+    NSLog(@"init FREOBJECT")
+    VKStartScreen *vkstart = [[VKStartScreen alloc] init];
+    [vkstart viewDidLoad];
+    
     eventContext = ctx;
     
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Test Message"

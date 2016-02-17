@@ -7,9 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6758E7831C71EDE000DF52F9 /* ane.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6758E7821C71EDE000DF52F9 /* ane.h */; };
 		6758E7851C71EDE000DF52F9 /* ane.m in Sources */ = {isa = PBXBuildFile; fileRef = 6758E7841C71EDE000DF52F9 /* ane.m */; };
 		6758E78D1C71EF1600DF52F9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6758E78C1C71EF1600DF52F9 /* Foundation.framework */; };
+		6771B1D71C747B160098C831 /* libVKSdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6771B1D61C747B160098C831 /* libVKSdk.a */; };
+		6771B1D91C747B2A0098C831 /* VKSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6771B1D81C747B2A0098C831 /* VKSdk.framework */; };
+		6771B1E41C747F0A0098C831 /* ApiCallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6771B1DB1C747F0A0098C831 /* ApiCallViewController.m */; };
+		6771B1E51C747F0A0098C831 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6771B1DD1C747F0A0098C831 /* TestViewController.m */; };
+		6771B1E61C747F0A0098C831 /* VKAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6771B1DF1C747F0A0098C831 /* VKAppDelegate.m */; };
+		6771B1E71C747F0A0098C831 /* VKStartScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 6771B1E31C747F0A0098C831 /* VKStartScreen.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -19,7 +24,6 @@
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
-				6758E7831C71EDE000DF52F9 /* ane.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -27,10 +31,21 @@
 
 /* Begin PBXFileReference section */
 		6758E77F1C71EDE000DF52F9 /* libane.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libane.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		6758E7821C71EDE000DF52F9 /* ane.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ane.h; sourceTree = "<group>"; };
 		6758E7841C71EDE000DF52F9 /* ane.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ane.m; sourceTree = "<group>"; };
 		6758E78B1C71EE5500DF52F9 /* FlashRuntimeExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FlashRuntimeExtensions.h; path = ../../../sdk/air18/include/FlashRuntimeExtensions.h; sourceTree = "<group>"; };
 		6758E78C1C71EF1600DF52F9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		6771B1D61C747B160098C831 /* libVKSdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libVKSdk.a; sourceTree = "<group>"; };
+		6771B1D81C747B2A0098C831 /* VKSdk.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = VKSdk.framework; sourceTree = "<group>"; };
+		6771B1DA1C747F0A0098C831 /* ApiCallViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApiCallViewController.h; sourceTree = "<group>"; };
+		6771B1DB1C747F0A0098C831 /* ApiCallViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApiCallViewController.m; sourceTree = "<group>"; };
+		6771B1DC1C747F0A0098C831 /* TestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
+		6771B1DD1C747F0A0098C831 /* TestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
+		6771B1DE1C747F0A0098C831 /* VKAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VKAppDelegate.h; sourceTree = "<group>"; };
+		6771B1DF1C747F0A0098C831 /* VKAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VKAppDelegate.m; sourceTree = "<group>"; };
+		6771B1E01C747F0A0098C831 /* VKSDKTestApplication-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "VKSDKTestApplication-Info.plist"; sourceTree = "<group>"; };
+		6771B1E11C747F0A0098C831 /* VKSDKTestApplication-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "VKSDKTestApplication-Prefix.pch"; sourceTree = "<group>"; };
+		6771B1E21C747F0A0098C831 /* VKStartScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VKStartScreen.h; sourceTree = "<group>"; };
+		6771B1E31C747F0A0098C831 /* VKStartScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VKStartScreen.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,6 +54,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				6758E78D1C71EF1600DF52F9 /* Foundation.framework in Frameworks */,
+				6771B1D91C747B2A0098C831 /* VKSdk.framework in Frameworks */,
+				6771B1D71C747B160098C831 /* libVKSdk.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -48,6 +65,8 @@
 		6758E7761C71EDE000DF52F9 = {
 			isa = PBXGroup;
 			children = (
+				6771B1D81C747B2A0098C831 /* VKSdk.framework */,
+				6771B1D61C747B160098C831 /* libVKSdk.a */,
 				6758E78C1C71EF1600DF52F9 /* Foundation.framework */,
 				6758E78B1C71EE5500DF52F9 /* FlashRuntimeExtensions.h */,
 				6758E7811C71EDE000DF52F9 /* ane */,
@@ -66,8 +85,17 @@
 		6758E7811C71EDE000DF52F9 /* ane */ = {
 			isa = PBXGroup;
 			children = (
-				6758E7821C71EDE000DF52F9 /* ane.h */,
 				6758E7841C71EDE000DF52F9 /* ane.m */,
+				6771B1DA1C747F0A0098C831 /* ApiCallViewController.h */,
+				6771B1DB1C747F0A0098C831 /* ApiCallViewController.m */,
+				6771B1DC1C747F0A0098C831 /* TestViewController.h */,
+				6771B1DD1C747F0A0098C831 /* TestViewController.m */,
+				6771B1DE1C747F0A0098C831 /* VKAppDelegate.h */,
+				6771B1DF1C747F0A0098C831 /* VKAppDelegate.m */,
+				6771B1E01C747F0A0098C831 /* VKSDKTestApplication-Info.plist */,
+				6771B1E11C747F0A0098C831 /* VKSDKTestApplication-Prefix.pch */,
+				6771B1E21C747F0A0098C831 /* VKStartScreen.h */,
+				6771B1E31C747F0A0098C831 /* VKStartScreen.m */,
 			);
 			path = ane;
 			sourceTree = "<group>";
@@ -128,7 +156,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6771B1E51C747F0A0098C831 /* TestViewController.m in Sources */,
 				6758E7851C71EDE000DF52F9 /* ane.m in Sources */,
+				6771B1E41C747F0A0098C831 /* ApiCallViewController.m in Sources */,
+				6771B1E71C747F0A0098C831 /* VKStartScreen.m in Sources */,
+				6771B1E61C747F0A0098C831 /* VKAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -218,6 +250,14 @@
 		6758E7891C71EDE000DF52F9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -228,6 +268,14 @@
 		6758E78A1C71EDE000DF52F9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -253,6 +301,7 @@
 				6758E78A1C71EDE000DF52F9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
