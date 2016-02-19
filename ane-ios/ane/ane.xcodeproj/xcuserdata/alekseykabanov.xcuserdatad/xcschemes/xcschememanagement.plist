@@ -6,6 +6,8 @@
 	<dict>
 		<key>ane.xcscheme</key>
 		<dict>
+			<key>isShown</key>
+			<true/>
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
@@ -13,6 +15,16 @@
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>6758E77E1C71EDE000DF52F9</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>6771B1EB1C75A87B0098C831</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>6771B2031C75A87B0098C831</key>
 		<dict>
 			<key>primary</key>
 			<true/>

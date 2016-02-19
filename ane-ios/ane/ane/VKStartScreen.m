@@ -21,7 +21,6 @@
 //  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #import "VKStartScreen.h"
-#import "VKAppDelegate.h"
 
 static NSString *const TOKEN_KEY = @"my_application_access_token";
 static NSString *const NEXT_CONTROLLER_SEGUE_ID = @"START_WORK";
