@@ -23,6 +23,19 @@
 #import <UIKit/UIKit.h>
 #import <VKSdk/VKSdk.h>
 
-@interface VKStartScreen : UIViewController <VKSdkDelegate>
+@interface VKStartScreen : UIViewController <VKSdkDelegate>{
+@private
+VKRequest *callingRequest;
+}
+
+- (void) auth;
+- (void)start;
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions ;
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url;
+
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options ;
 
 @end
+
