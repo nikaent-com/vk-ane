@@ -10,10 +10,10 @@ public class ANE {
         _onStatus = onStatus;
     }
 
-    public function init():void {
+    public function init(appIdVk : String):void {
         if (!_context) {
             _context = ExtensionContext.createExtensionContext("com.gogames.ane", null);
-            _context.call("init");
+            _context.call("init", appIdVk);
             _context.addEventListener(StatusEvent.STATUS, extensionStatusHandler, false, 0, true);
         }
     }

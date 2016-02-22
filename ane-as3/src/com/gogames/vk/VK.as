@@ -16,12 +16,12 @@ public class VK extends EventDispatcher {
 
     private var mapCallback:Dictionary = new Dictionary();
 
-    public function VK() {
+    public function VK(appIdVk : String) {
         if (_inst) throw new Error(ErrorMessage.SINGLETON);
 
         _inst = this;
         _ane = new ANE(onStatus);
-        _ane.init();
+        _ane.init(appIdVk);
     }
 
     private static function get ane():ANE {
@@ -56,7 +56,7 @@ public class VK extends EventDispatcher {
     }
 
     public static function getInstance():VK {
-        if (!_inst) new VK();
+        if (!_inst) throw new Error(ErrorMessage.VK_INIT);
         return _inst;
     }
 

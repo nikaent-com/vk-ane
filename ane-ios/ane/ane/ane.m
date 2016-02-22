@@ -22,8 +22,15 @@ FREObject init(FREContext ctx, void* funcData, uint32_t argc, FREObject argv[])
 {
     NSDictionary *bundleInfo = [[NSBundle mainBundle] infoDictionary];
     
+    uint32_t length;
+    const uint8_t *value;
+    FREGetObjectAsUTF8(argv[0], &length, &value);
+    
+    NSString *appVkId = [NSString stringWithUTF8String: (char*) value];
+    
     NSString *appName = [bundleInfo objectForKey:@"CFBundleIdentifier"];
     NSLog(@"AppName: %@",appName);
+    NSLog(@"AppVkId: %@",appVkId);
     
     tugeAneAdView = [[VKStartScreen alloc] init];
     UIScreen *sc = [UIScreen mainScreen];

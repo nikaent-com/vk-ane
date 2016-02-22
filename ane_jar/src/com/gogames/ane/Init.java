@@ -2,7 +2,10 @@ package com.gogames.ane;
 
 import com.adobe.fre.FREContext;
 import com.adobe.fre.FREFunction;
+import com.adobe.fre.FREInvalidObjectException;
 import com.adobe.fre.FREObject;
+import com.adobe.fre.FRETypeMismatchException;
+import com.adobe.fre.FREWrongThreadException;
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKAccessTokenTracker;
 import com.vk.sdk.VKSdk;
@@ -28,8 +31,27 @@ public class Init implements FREFunction {
 	public FREObject call(FREContext arg0, FREObject[] arg1) {
 		Context toastContext = arg0.getActivity();
 
+		int appVkId = 0;
+		try {
+			String appVkIdStr = arg1[0].getAsString();
+			appVkId = Integer.parseInt(appVkIdStr);
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (FRETypeMismatchException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (FREInvalidObjectException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (FREWrongThreadException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Log.i("ANE VK", "appVkId: "+appVkId);
+		
 		vkAccessTokenTracker.startTracking(); 
-		VKSdk.customInitialize(toastContext, 5282890, "5.21").withPayments();
+		VKSdk.customInitialize(toastContext, appVkId, "5.21").withPayments();
 
 		String[] fingerprints = VKUtil.getCertificateFingerprint(toastContext, toastContext.getPackageName());
 

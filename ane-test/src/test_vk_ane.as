@@ -31,6 +31,8 @@ public class test_vk_ane extends Sprite {
         tf.height = tf.width = 500;
         addChild(tf);
 
+        new VK("5282890");
+
         VK.getInstance().addEventListener(VKEvent.AUTH_FAILED, function (e:VKEvent):void {
             tf.text = VKEvent.AUTH_FAILED;
         });
