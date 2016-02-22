@@ -92,9 +92,46 @@ FREObject logout(FREContext ctx, void* funcData, uint32_t argc, FREObject argv[]
     return NULL;
 }
 
+FREObject apiCall(FREContext ctx, void* funcData, uint32_t argc, FREObject argv[])
+{
+    NSLog(@"apiCall");
+    
+    int32_t method;
+    FREGetObjectAsInt32(argv[0], &method);
+    
+    uint32_t length;
+    const uint8_t *value;
+    FREGetObjectAsUTF8(argv[1], &length, &value);
+    NSString *params = [NSString stringWithUTF8String: (char*) value];
+    
+    NSLog(params);
+    
+    switch (method) {
+        case 2:{
+            NSLog(@"getUsers");
+            NSData *data = [params dataUsingEncoding:NSUTF8StringEncoding];
+
+            NSArray *arrayScope = [NSJSONSerialization JSONObjectWithData:data
+                                                                  options:0
+                                                                    error:nil];
+            VKRequest *request = [[VKApi users] get];
+            [request executeWithResultBlock:^(VKResponse *response) {
+                NSLog(@"Result: %@", response);
+            }                    errorBlock:^(NSError *error) {
+                NSLog(@"Error: %@", error);
+            }];
+        }break;
+            
+        default:
+            break;
+    }
+    
+    return NULL;
+}
+
 void VolExtContextInitializer(void* extData, const uint8_t* ctxType, FREContext ctx, uint32_t* numFunctionsToTest, const FRENamedFunction** functionsToSet)
 {
-    *numFunctionsToTest = 4;
+    *numFunctionsToTest = 5;
     
     FRENamedFunction* func = (FRENamedFunction*) malloc(sizeof(FRENamedFunction) * *numFunctionsToTest);
     
@@ -113,6 +150,11 @@ void VolExtContextInitializer(void* extData, const uint8_t* ctxType, FREContext 
     func[3].name = (const uint8_t*) "logout";
     func[3].functionData = NULL;
     func[3].function = &logout;
+    
+    func[4].name = (const uint8_t*) "apiCall";
+    func[4].functionData = NULL;
+    func[4].function = &apiCall;
+
     
     *functionsToSet = func;
 }
