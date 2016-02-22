@@ -13,10 +13,13 @@
 #import <UIKit/UIKit.h>
 #import <VKSdk/VKSdk.h>
 #import "VKStartScreen.h"
+#import <Foundation/Foundation.h>
 
 
 FREContext eventContext;
 VKStartScreen *tugeAneAdView;
+
+NSString *appVkId;
 
 FREObject init(FREContext ctx, void* funcData, uint32_t argc, FREObject argv[])
 {
@@ -26,7 +29,7 @@ FREObject init(FREContext ctx, void* funcData, uint32_t argc, FREObject argv[])
     const uint8_t *value;
     FREGetObjectAsUTF8(argv[0], &length, &value);
     
-    NSString *appVkId = [NSString stringWithUTF8String: (char*) value];
+    appVkId = [NSString stringWithUTF8String: (char*) value];
     
     NSString *appName = [bundleInfo objectForKey:@"CFBundleIdentifier"];
     NSLog(@"AppName: %@",appName);
@@ -46,8 +49,7 @@ FREObject init(FREContext ctx, void* funcData, uint32_t argc, FREObject argv[])
     [tugeAneAdView.view setUserInteractionEnabled:false];
     
     eventContext = ctx;
-    
-    [tugeAneAdView start];
+    [tugeAneAdView start:appVkId scope:nil];
     
     return NULL;
 }
@@ -55,13 +57,44 @@ FREObject init(FREContext ctx, void* funcData, uint32_t argc, FREObject argv[])
 FREObject login(FREContext ctx, void* funcData, uint32_t argc, FREObject argv[])
 {
     NSLog(@"login");
-    [tugeAneAdView auth];
+    
+    uint32_t length;
+    const uint8_t *value;
+    FREGetObjectAsUTF8(argv[0], &length, &value);
+    NSString *strScope = [NSString stringWithUTF8String: (char*) value];
+    NSData *data = [strScope dataUsingEncoding:NSUTF8StringEncoding];
+    
+    NSArray *arrayScope = [NSJSONSerialization JSONObjectWithData:data
+                                                          options:0
+                                                            error:nil];
+    
+    [tugeAneAdView auth:arrayScope];
+    NSLog(@"login: %@",arrayScope);
+    return NULL;
+}
+
+FREObject isLoggedIn(FREContext ctx, void* funcData, uint32_t argc, FREObject argv[])
+{
+    NSLog(@"isLoggedIn");
+    
+    FREObject retBool = nil;
+    FRENewObjectFromBool([VKSdk isLoggedIn], &retBool);
+    
+    return retBool;
+}
+
+FREObject logout(FREContext ctx, void* funcData, uint32_t argc, FREObject argv[])
+{
+    NSLog(@"logout");
+    
+    [VKSdk forceLogout];
+    
     return NULL;
 }
 
 void VolExtContextInitializer(void* extData, const uint8_t* ctxType, FREContext ctx, uint32_t* numFunctionsToTest, const FRENamedFunction** functionsToSet)
 {
-    *numFunctionsToTest = 2;
+    *numFunctionsToTest = 4;
     
     FRENamedFunction* func = (FRENamedFunction*) malloc(sizeof(FRENamedFunction) * *numFunctionsToTest);
     
@@ -73,50 +106,21 @@ void VolExtContextInitializer(void* extData, const uint8_t* ctxType, FREContext 
     func[1].functionData = NULL;
     func[1].function = &login;
     
+    func[2].name = (const uint8_t*) "isLoggedIn";
+    func[2].functionData = NULL;
+    func[2].function = &isLoggedIn;
+    
+    func[3].name = (const uint8_t*) "logout";
+    func[3].functionData = NULL;
+    func[3].function = &logout;
+    
     *functionsToSet = func;
 }
 void VolumeExtensionInitializer(void** extDataToSet, FREContextInitializer* ctxInitializerToSet, FREContextFinalizer* ctxFinalizerToSet)
 {
+    //initReg();
+    
     *extDataToSet = NULL;
     *ctxInitializerToSet = &VolExtContextInitializer;
-}
-
-void registerForRemote()
-{
-    NSLog(@"AsPush :: registering app for remote notifications.");
-    
-    //Code below found on stack overflow. Fantastic find.
-    
-    id delegate = [[UIApplication sharedApplication] delegate];
-    
-    Class objectClass = object_getClass(delegate);
-    
-    NSString *newClassName = [NSString stringWithFormat:@"Custom_%@", NSStringFromClass(objectClass)];
-    Class modDelegate = NSClassFromString(newClassName);
-    if (modDelegate == nil)
-    {
-        // this class doesn't exist; create it
-        // allocate a new class
-        modDelegate = objc_allocateClassPair(objectClass, [newClassName UTF8String], 0);
-        
-        SEL selectorToOverride1 = @selector(application:openURL:options:);
-        SEL selectorToOverride2 = @selector(application:openURL:);
-        
-        Method m1 = class_getInstanceMethod([VKStartScreen class], selectorToOverride1);
-        Method m2 = class_getInstanceMethod([VKStartScreen class], selectorToOverride2);
-        
-        IMP theImplementation1 = [tugeAneAdView methodForSelector:selectorToOverride1];
-        IMP theImplementation2 = [tugeAneAdView methodForSelector:selectorToOverride2];
-        
-        class_addMethod(modDelegate, selectorToOverride1, theImplementation1, method_getTypeEncoding(m1));
-        class_addMethod(modDelegate, selectorToOverride2, theImplementation2, method_getTypeEncoding(m2));
-                                                                                // register the new class with the runtime
-        objc_registerClassPair(modDelegate);
-                                                                                }
-                                                                                // change the class of the object
-        object_setClass(delegate, modDelegate);
-                                                                                
-                                                                                //Register this app for remote notifications
-        [[UIApplication sharedApplication] registerForRemoteNotificationTypes: UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeBadge];
 }
 

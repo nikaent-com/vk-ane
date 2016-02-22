@@ -196,6 +196,40 @@
             <!--<string>UIStatusBarStyleBlackOpaque</string>-->
             <!--<key>UIRequiresPersistentWiFi</key>-->
             <!--<string>YES</string>-->
+            <key>NSAppTransportSecurity</key>
+<dict>
+    <key>NSExceptionDomains</key>
+    <dict>
+        <key>vk.com</key>
+        <dict>
+            <key>NSExceptionRequiresForwardSecrecy</key>
+            <false/>
+            <key>NSIncludesSubdomains</key>
+            <true/>
+            <key>NSExceptionAllowsInsecureHTTPLoads</key>
+            <true/>
+        </dict>
+    </dict>
+</dict>
+<key>LSApplicationQueriesSchemes</key>
+<array>
+    <string>vk</string>
+    <string>vk-share</string>
+    <string>vkauthorize</string>
+</array>
+<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>vk5282890</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>vk5282890</string>
+			</array>
+		</dict>
+	</array>
             ]]>
         </InfoAdditions>
 

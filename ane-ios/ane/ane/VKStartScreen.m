@@ -1,26 +1,7 @@
-//
-//  VKStartScreen.m
-//
-//  Copyright (c) 2014 VK.com
-//
-//  Permission is hereby granted, free of charge, to any person obtaining a copy of
-//  this software and associated documentation files (the "Software"), to deal in
-//  the Software without restriction, including without limitation the rights to
-//  use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
-//  the Software, and to permit persons to whom the Software is furnished to do so,
-//  subject to the following conditions:
-//
-//  The above copyright notice and this permission notice shall be included in all
-//  copies or substantial portions of the Software.
-//
-//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-//  FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-//  COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-//  IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-//  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
 #import "VKStartScreen.h"
+
+#define NSLog(fmt, ...)  { UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"%s\n [Line %d] ", __PRETTY_FUNCTION__, __LINE__] message:[NSString stringWithFormat:fmt, ##__VA_ARGS__]  delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil]; [alert show]; }
+
 
 static NSString *const TOKEN_KEY = @"my_application_access_token";
 static NSString *const NEXT_CONTROLLER_SEGUE_ID = @"START_WORK";
@@ -34,25 +15,27 @@ static NSArray *SCOPE = nil;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self initReg];
 }
-- (void)start {
+- (void)start:(NSString*) appVkId scope:(NSArray *) scope {
     SCOPE = @[VK_PER_FRIENDS, VK_PER_WALL, VK_PER_AUDIO, VK_PER_PHOTOS, VK_PER_NOHTTPS, VK_PER_EMAIL, VK_PER_MESSAGES];
-    [[VKSdk initializeWithAppId:@"5282890"] registerDelegate:self];
+    id delegate = [[UIApplication sharedApplication] delegate];
+    [[VKSdk initializeWithAppId:appVkId] registerDelegate:self];
     [[VKSdk instance] setUiDelegate:self];
     [VKSdk wakeUpSession:SCOPE completeBlock:^(VKAuthorizationState state, NSError *error) {
         if (state == VKAuthorizationAuthorized) {
+            NSLog(@"VKAuthorizationAuthorized");
             [self startWorking];
         } else if (error) {
             [[[UIAlertView alloc] initWithTitle:nil message:[error description] delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
-        }else{
-            [self auth];
         }
     }];
 }
 
 - (void)startWorking {
+    NSLog(@"startWorking");
     //[self performSegueWithIdentifier:NEXT_CONTROLLER_SEGUE_ID sender:self];
-    [self getUsers];
+    //[self getUsers];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -60,13 +43,10 @@ static NSArray *SCOPE = nil;
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)authorize:(id)sender {
-    [VKSdk authorize:SCOPE];
-}
+-(void) auth:(NSArray *) scope{
+    //SCOPE = @[VK_PER_FRIENDS, VK_PER_WALL, VK_PER_AUDIO, VK_PER_PHOTOS, VK_PER_NOHTTPS, VK_PER_EMAIL, VK_PER_MESSAGES];
 
--(void) auth{
-    [[[UIAlertView alloc] initWithTitle:nil message:@"auth" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
-    [VKSdk authorize:SCOPE];
+    [VKSdk authorize:scope];
 }
 
 - (IBAction)openShareDialog:(id)sender {
@@ -105,10 +85,11 @@ static NSArray *SCOPE = nil;
 }
 
 - (void)vkSdkTokenHasExpired:(VKAccessToken *)expiredToken {
-    [self authorize:nil];
+    //[self authorize:nil];
 }
 
 - (void)vkSdkAccessAuthorizationFinishedWithResult:(VKAuthorizationResult *)result {
+    NSLog(@"vkSdkAccessAuthorizationFinishedWithResult\n");
     if (result.token) {
         [self startWorking];
     } else if (result.error) {
@@ -117,15 +98,55 @@ static NSArray *SCOPE = nil;
 }
 
 - (void)vkSdkUserAuthorizationFailed {
-    NSLog(@"Access denied\n%@");
+    NSLog(@"Access denied\n");
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void)vkSdkShouldPresentViewController:(UIViewController *)controller {
-    [[[UIAlertView alloc] initWithTitle:nil message:@"vkSdkShouldPresentViewController" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+    NSLog(@"vkSdkShouldPresentViewController\n");
     
-    [self presentViewController:controller animated:YES completion:nil];
+    //[self.navigationController.topViewController presentViewController:controller animated:YES completion:nil];
 }
+
+-(void) initReg
+{
+    NSLog(@"AsPush :: registering app for remote notifications.");
+    
+    //Code below found on stack overflow. Fantastic find.
+    
+    id delegate = [[UIApplication sharedApplication] delegate];
+    
+    Class objectClass = object_getClass(delegate);
+    
+    NSString *newClassName = [NSString stringWithFormat:@"Custom_%@", NSStringFromClass(objectClass)];
+    Class modDelegate = NSClassFromString(newClassName);
+    if (modDelegate == nil)
+    {
+        // this class doesn't exist; create it
+        // allocate a new class
+        modDelegate = objc_allocateClassPair(objectClass, [newClassName UTF8String], 0);
+        
+        SEL selectorToOverride1 = @selector(application:openURL:sourceApplication:annotation:);
+        SEL selectorToOverride2 = @selector(application:didFinishLaunchingWithOptions:);
+        
+        Method m1 = class_getInstanceMethod([VKStartScreen class], selectorToOverride1);
+        Method m2 = class_getInstanceMethod([VKStartScreen class], selectorToOverride2);
+        
+        IMP theImplementation1 = [self methodForSelector:selectorToOverride1];
+        IMP theImplementation2 = [self methodForSelector:selectorToOverride2];
+        
+        class_addMethod(modDelegate, selectorToOverride1, theImplementation1, method_getTypeEncoding(m1));
+        class_addMethod(modDelegate, selectorToOverride2, theImplementation2, method_getTypeEncoding(m2));
+        // register the new class with the runtime
+        objc_registerClassPair(modDelegate);
+    }
+    // change the class of the object
+    object_setClass(delegate, modDelegate);
+    
+    //Register this app for remote notifications
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes: UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeBadge];
+}
+
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     return YES;
@@ -134,10 +155,6 @@ static NSArray *SCOPE = nil;
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     [VKSdk processOpenURL:url fromApplication:sourceApplication];
     
-    return YES;
-}
-- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options {
-    [VKSdk processOpenURL:url fromApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey]];
     return YES;
 }
 

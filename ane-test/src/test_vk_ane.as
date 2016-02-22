@@ -46,7 +46,7 @@ public class test_vk_ane extends Sprite {
         var buttons:Vector.<ButtonVk> = new Vector.<ButtonVk>();
         buttons.push(new ButtonVk("login", function (e:Event):void {
             trace("login");
-            VK.login(Scope.FRIENDS, Scope.NOTIFICATIONS, Scope.STATUS, Scope.GROUPS, Scope.MESSAGES);
+            VK.login(Scope.FRIENDS, Scope.NOTIFICATIONS, Scope.STATUS, Scope.GROUPS, Scope.WALL, Scope.AUDIO, Scope.PHOTOS, Scope.NOHTTPS, Scope.EMAIL, Scope.MESSAGES);
             //VK.login(Scope.FRIENDS, Scope.NOTIFICATIONS, Scope.STATUS);
         }));
         buttons.push(new ButtonVk("logout", function (e:Event):void {
