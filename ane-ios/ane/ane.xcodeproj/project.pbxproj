@@ -12,14 +12,6 @@
 		6771B1D71C747B160098C831 /* libVKSdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6771B1D61C747B160098C831 /* libVKSdk.a */; };
 		6771B1D91C747B2A0098C831 /* VKSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6771B1D81C747B2A0098C831 /* VKSdk.framework */; };
 		6771B1E71C747F0A0098C831 /* VKStartScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 6771B1E31C747F0A0098C831 /* VKStartScreen.m */; };
-		6771B2161C75F2850098C831 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6758E78C1C71EF1600DF52F9 /* Foundation.framework */; };
-		6771B2181C75F3C00098C831 /* libVKSdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6771B1D61C747B160098C831 /* libVKSdk.a */; };
-		6771B21A1C75F3EF0098C831 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6771B2191C75F3EF0098C831 /* SafariServices.framework */; };
-		6771B21C1C75F40C0098C831 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6771B21B1C75F40C0098C831 /* MobileCoreServices.framework */; };
-		6771B21E1C75F4150098C831 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6771B21D1C75F4150098C831 /* CoreGraphics.framework */; };
-		6771B2201C75F41C0098C831 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6771B21F1C75F41C0098C831 /* UIKit.framework */; };
-		6771B2221C75F4250098C831 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6771B2211C75F4250098C831 /* CoreFoundation.framework */; };
-		6771B2241C75F4540098C831 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6771B2231C75F4540098C831 /* SystemConfiguration.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -37,7 +29,7 @@
 /* Begin PBXFileReference section */
 		6758E77F1C71EDE000DF52F9 /* libane.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libane.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		6758E7841C71EDE000DF52F9 /* ane.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ane.m; sourceTree = "<group>"; };
-		6758E78B1C71EE5500DF52F9 /* FlashRuntimeExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FlashRuntimeExtensions.h; path = ../../../sdk/air18/include/FlashRuntimeExtensions.h; sourceTree = "<group>"; };
+		6758E78B1C71EE5500DF52F9 /* FlashRuntimeExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FlashRuntimeExtensions.h; path = "/Users/alekseykabanov/Projects/vk-ane/ane-ios/ane/../../../sdk/air18/include/FlashRuntimeExtensions.h"; sourceTree = "<absolute>"; };
 		6758E78C1C71EF1600DF52F9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6771B1D61C747B160098C831 /* libVKSdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libVKSdk.a; sourceTree = "<group>"; };
 		6771B1D81C747B2A0098C831 /* VKSdk.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = VKSdk.framework; sourceTree = "<group>"; };
@@ -59,28 +51,6 @@
 				6758E78D1C71EF1600DF52F9 /* Foundation.framework in Frameworks */,
 				6771B1D91C747B2A0098C831 /* VKSdk.framework in Frameworks */,
 				6771B1D71C747B160098C831 /* libVKSdk.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6771B1E91C75A87B0098C831 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				6771B2241C75F4540098C831 /* SystemConfiguration.framework in Frameworks */,
-				6771B2221C75F4250098C831 /* CoreFoundation.framework in Frameworks */,
-				6771B2201C75F41C0098C831 /* UIKit.framework in Frameworks */,
-				6771B21E1C75F4150098C831 /* CoreGraphics.framework in Frameworks */,
-				6771B21C1C75F40C0098C831 /* MobileCoreServices.framework in Frameworks */,
-				6771B21A1C75F3EF0098C831 /* SafariServices.framework in Frameworks */,
-				6771B2181C75F3C00098C831 /* libVKSdk.a in Frameworks */,
-				6771B2161C75F2850098C831 /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6771B2011C75A87B0098C831 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -143,7 +113,6 @@
 			productReference = 6758E77F1C71EDE000DF52F9 /* libane.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -155,14 +124,6 @@
 				TargetAttributes = {
 					6758E77E1C71EDE000DF52F9 = {
 						CreatedOnToolsVersion = 7.2.1;
-					};
-					6771B1EB1C75A87B0098C831 = {
-						CreatedOnToolsVersion = 7.2.1;
-						DevelopmentTeam = EL3RD7WZMR;
-					};
-					6771B2031C75A87B0098C831 = {
-						CreatedOnToolsVersion = 7.2.1;
-						TestTargetID = 6771B1EB1C75A87B0098C831;
 					};
 				};
 			};
@@ -184,23 +145,6 @@
 		};
 /* End PBXProject section */
 
-/* Begin PBXResourcesBuildPhase section */
-		6771B1EA1C75A87B0098C831 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6771B2021C75A87B0098C831 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXResourcesBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		6758E77B1C71EDE000DF52F9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -208,20 +152,6 @@
 			files = (
 				6758E7851C71EDE000DF52F9 /* ane.m in Sources */,
 				6771B1E71C747F0A0098C831 /* VKStartScreen.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6771B1E81C75A87B0098C831 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6771B2001C75A87B0098C831 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -343,7 +273,6 @@
 			};
 			name = Release;
 		};
-		
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */

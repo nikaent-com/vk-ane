@@ -92,21 +92,34 @@ FREObject logout(FREContext ctx, void* funcData, uint32_t argc, FREObject argv[]
     return NULL;
 }
 
-FREObject apiCall(FREContext ctx, void* funcData, uint32_t argc, FREObject argv[])
-{
-    NSLog(@"apiCall");
-    
-    int32_t method;
-    FREGetObjectAsInt32(argv[0], &method);
-    
+NSString* getString(FREObject obj){
     uint32_t length;
     const uint8_t *value;
-    FREGetObjectAsUTF8(argv[1], &length, &value);
-    NSString *params = [NSString stringWithUTF8String: (char*) value];
+    FREGetObjectAsUTF8(obj, &length, &value);
+    return [NSString stringWithUTF8String: (char*) value];
+}
+
+FREObject apiCall(FREContext ctx, void* funcData, uint32_t argc, FREObject argv[])
+{
+    NSString *method = getString(argv[0]);
+    NSString *params = getString(argv[1]);
+    NSLog(@"apiCall",params);
+
+    NSData *data = [params dataUsingEncoding:NSUTF8StringEncoding];
     
-    NSLog(params);
+    NSDictionary *paramsDic = [NSJSONSerialization JSONObjectWithData:data
+                                                          options:0
+                                                            error:nil];
     
-    switch (method) {
+    VKRequest *request = [VKApi requestWithMethod:method andParameters:paramsDic];
+    [request executeWithResultBlock:^(VKResponse *response) {
+        NSLog(@"Result: %@", response);
+    }                    errorBlock:^(NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+    
+    
+/*    switch (method) {
         case 2:{
             NSLog(@"getUsers");
             NSData *data = [params dataUsingEncoding:NSUTF8StringEncoding];
@@ -114,6 +127,7 @@ FREObject apiCall(FREContext ctx, void* funcData, uint32_t argc, FREObject argv[
             NSArray *arrayScope = [NSJSONSerialization JSONObjectWithData:data
                                                                   options:0
                                                                     error:nil];
+            VKApi users
             VKRequest *request = [[VKApi users] get];
             [request executeWithResultBlock:^(VKResponse *response) {
                 NSLog(@"Result: %@", response);
@@ -125,6 +139,7 @@ FREObject apiCall(FREContext ctx, void* funcData, uint32_t argc, FREObject argv[
         default:
             break;
     }
+ */
     
     return NULL;
 }
@@ -154,7 +169,6 @@ void VolExtContextInitializer(void* extData, const uint8_t* ctxType, FREContext 
     func[4].name = (const uint8_t*) "apiCall";
     func[4].functionData = NULL;
     func[4].function = &apiCall;
-
     
     *functionsToSet = func;
 }
