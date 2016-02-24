@@ -3,15 +3,15 @@
 подключить библиотеку bin/com.nikaent.ane.vk.ane
 
 Первая инициализация:
-	VK.init(<app_id>);
+	VK.init(APP_ID);
 
-<app_id> - Идентификатора приложения в VK
+APP_ID - Идентификатор приложения в VK
 
 
 Подписаться на события:
-	VK.addEventListener(<VKEvent>, <callback>);
+	VK.addEventListener(VKEvent, callback);
 
-<VKEvent>:
+VKEvent:
 	VKEvent.AUTH_FAILED - ошибка авторизации
 	VKEvent.AUTH_SUCCESSFUL - авторизация прошла успешно
 	VKEvent.TOKEN_INVALID - ошибка в ключе
@@ -19,4 +19,4 @@
 
 Авторизация/логин:
 	VK.login(Scope.FRIENDS, Scope.NOTIFICATIONS, ...rest);
-в параметрах метода перечисляем все нужные Scopes
+	в параметрах метода перечисляем все нужные Scopes
