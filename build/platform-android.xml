@@ -12,7 +12,7 @@
 			<folderName>res</folderName>
 		</packagedResource>
 		<packagedResource>
-			<packageName>com.gogames.ane</packageName>
+			<packageName>com.nikaent.ane.vk</packageName>
 			<folderName>vk-res</folderName>
 		</packagedResource>
 	</packagedResources>

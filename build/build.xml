@@ -91,7 +91,7 @@
             <arg value="-package"/>
             <arg value="-target"/>
             <arg value="ane"/>
-            <arg value="${name}.ane"/>
+            <arg value="com.nikaent.ane.vk.ane"/>
             <arg value="../build/extension.xml"/>
             <arg line="-swc swc/${name}.swc"/>
             <arg line="-platform iPhone-ARM -platformoptions ../build/platform-ios.xml -C ios/ ."/>
@@ -101,7 +101,7 @@
             <arg line="-platform default -C default/ ."/>
         </exec>
 
-        <move file="../temp/${name}.ane" todir="../bin"/>
+        <move file="../temp/com.nikaent.ane.vk.ane" todir="../bin"/>
         <delete dir="../temp/"/>
     </target>
 </project>

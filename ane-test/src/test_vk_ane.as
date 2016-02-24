@@ -1,22 +1,21 @@
 package {
-
-
-import com.gogames.vk.VK;
-import com.gogames.vk.model.Scope;
-import com.gogames.vk.model.UserParam;
-import com.gogames.vk.model.VKEvent;
+import com.nikaent.ane.vk.VK;
+import com.nikaent.ane.vk.model.Scope;
+import com.nikaent.ane.vk.model.UserParam;
+import com.nikaent.ane.vk.model.VKEvent;
 
 import flash.display.Sprite;
 import flash.events.Event;
-import flash.events.MouseEvent;
 import flash.events.TouchEvent;
-import flash.text.AntiAliasType;
 import flash.text.TextField;
 import flash.text.TextFormat;
 import flash.ui.Multitouch;
 import flash.ui.MultitouchInputMode;
 
 public class test_vk_ane extends Sprite {
+
+    private const APP_ID : String = "5282890";
+
     public function test_vk_ane() {
         Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
 
@@ -31,19 +30,21 @@ public class test_vk_ane extends Sprite {
         tf.height = tf.width = 500;
         addChild(tf);
 
-        new VK("5282890");
-
-        VK.getInstance().addEventListener(VKEvent.AUTH_FAILED, function (e:VKEvent):void {
+        VK.addEventListener(VKEvent.AUTH_FAILED, function (e:VKEvent):void {
             tf.text = VKEvent.AUTH_FAILED;
         });
-        VK.getInstance().addEventListener(VKEvent.AUTH_SUCCESSFUL, function (e:VKEvent):void {
+        VK.addEventListener(VKEvent.AUTH_SUCCESSFUL, function (e:VKEvent):void {
             tf.text = VKEvent.AUTH_SUCCESSFUL;
         });
-        VK.getInstance().addEventListener(VKEvent.TOKEN_INVALID, function (e:VKEvent):void {
+        VK.addEventListener(VKEvent.TOKEN_INVALID, function (e:VKEvent):void {
             tf.text = VKEvent.TOKEN_INVALID;
         });
 
         var buttons:Vector.<ButtonVk> = new Vector.<ButtonVk>();
+        buttons.push(new ButtonVk("init", function (e:Event):void {
+            trace("login");
+            VK.init(APP_ID);
+        }));
         buttons.push(new ButtonVk("login", function (e:Event):void {
             trace("login");
             VK.login(Scope.FRIENDS, Scope.NOTIFICATIONS, Scope.STATUS, Scope.GROUPS, Scope.WALL, Scope.AUDIO, Scope.PHOTOS, Scope.NOHTTPS, Scope.EMAIL, Scope.MESSAGES);

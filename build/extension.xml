@@ -1,19 +1,19 @@
 <extension xmlns="http://ns.adobe.com/air/extension/4.0">
-        <id>com.gogames.ane</id>
+        <id>com.nikaent.ane.vk</id>
         <versionNumber>1</versionNumber>
         <platforms>
                 <platform name="Android-ARM">
                         <applicationDeployment>
                                 <nativeLibrary>libane.jar</nativeLibrary>
-                                <initializer>com.gogames.ane.AneVk</initializer>
-                                <finalizer>com.gogames.ane.AneVk</finalizer>
+                                <initializer>com.nikaent.ane.vk.AneVk</initializer>
+                                <finalizer>com.nikaent.ane.vk.AneVk</finalizer>
                         </applicationDeployment>
                 </platform>
                 <platform name="Android-x86">
                         <applicationDeployment>
                                 <nativeLibrary>libane.jar</nativeLibrary>
-                                <initializer>com.gogames.ane.AneVk</initializer>
-                                <finalizer>com.gogames.ane.AneVk</finalizer>
+                                <initializer>com.nikaent.ane.vk.AneVk</initializer>
+                                <finalizer>com.nikaent.ane.vk.AneVk</finalizer>
                         </applicationDeployment>
                 </platform>
                 <platform name="iPhone-ARM">

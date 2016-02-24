@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="Flex" version="4">
-  <component name="FlexBuildConfigurationManager" active="com.gogames.ane">
+  <component name="FlexBuildConfigurationManager" active="test">
     <configurations>
-      <configuration name="com.gogames.ane" target-platform="Mobile" pure-as="true" main-class="test_vk_ane" output-file="test_vk_ane.swf" output-folder="$MODULE_DIR$/out/production/ane-test">
+      <configuration name="test" target-platform="Mobile" pure-as="true" main-class="test_vk_ane" output-file="test_vk_ane.swf" output-folder="$MODULE_DIR$/out/production/ane-test">
         <dependencies target-player="19.0">
           <entries>
-            <entry library-id="055028d5-38f5-4ae3-8ac1-e83d6fec54cc">
+            <entry library-id="0ee7c9e6-05de-4870-a0f6-20113d64399e">
               <dependency linkage="Merged" />
             </entry>
           </entries>
-          <sdk name="AIRSDK_Compiler" />
+          <sdk name="apache-flex" />
         </dependencies>
         <compiler-options />
         <packaging-air-desktop />
-        <packaging-android enabled="true" use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/test_vk_ane-app.xml" package-file-name="test_vk_ane" />
-        <packaging-ios enabled="true" use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/test_vk_ane_ios-app.xml" package-file-name="com.gogames.ane">
+        <packaging-android enabled="true" use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/test_vk_ane-app.xml" package-file-name="ane_test" />
+        <packaging-ios enabled="true" use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/test_vk_ane_ios-app.xml" package-file-name="ane_test">
           <AirSigningOptions keystore-path="$USER_HOME$/Downloads/Сертификаты.p12" provisioning-profile-path="$USER_HOME$/Downloads/ane_provision.mobileprovision" />
         </packaging-ios>
       </configuration>
@@ -26,13 +26,13 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
     </content>
-    <orderEntry type="jdk" jdkName="AIRSDK_Compiler" jdkType="Flex SDK Type (new)" />
+    <orderEntry type="jdk" jdkName="apache-flex" jdkType="Flex SDK Type (new)" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library" exported="">
       <library type="flex">
-        <properties id="055028d5-38f5-4ae3-8ac1-e83d6fec54cc" />
+        <properties id="0ee7c9e6-05de-4870-a0f6-20113d64399e" />
         <CLASSES>
-          <root url="jar://$USER_HOME$/Downloads/vk-ane-nika/bin/ane.ane!/" />
+          <root url="jar://$MODULE_DIR$/../bin/com.nikaent.ane.vk.ane!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

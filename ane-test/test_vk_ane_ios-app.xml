@@ -12,7 +12,7 @@
 
     <!-- A universally unique application identifier. Must be unique across all AIR applications.
          Using a reverse DNS-style name as the id is recommended. (Eg. com.example.ExampleApplication.) Required. -->
-    <id>com.gogames.ane</id>
+    <id>com.nikaent.ane.vk</id>
 
     <!-- Used as the filename for the application. Required. -->
     <filename>test_vk_ane</filename>
@@ -42,7 +42,7 @@
 
     <!-- Identifies the ActionScript extensions used by an application. -->
     <extensions>
-        <extensionID>com.gogames.ane</extensionID>
+        <extensionID>com.nikaent.ane.vk</extensionID>
     </extensions>
 
     <!-- Settings for the application's initial window. Required. -->
