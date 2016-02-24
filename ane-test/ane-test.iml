@@ -5,7 +5,7 @@
       <configuration name="com.gogames.ane" target-platform="Mobile" pure-as="true" main-class="test_vk_ane" output-file="test_vk_ane.swf" output-folder="$MODULE_DIR$/out/production/ane-test">
         <dependencies target-player="19.0">
           <entries>
-            <entry library-id="796e4212-9dd0-4b2c-927d-f797b5e97866">
+            <entry library-id="055028d5-38f5-4ae3-8ac1-e83d6fec54cc">
               <dependency linkage="Merged" />
             </entry>
           </entries>
@@ -30,9 +30,9 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library" exported="">
       <library type="flex">
-        <properties id="796e4212-9dd0-4b2c-927d-f797b5e97866" />
+        <properties id="055028d5-38f5-4ae3-8ac1-e83d6fec54cc" />
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../ane-lib/vk_ane.ane!/" />
+          <root url="jar://$USER_HOME$/Downloads/vk-ane-nika/bin/ane.ane!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
