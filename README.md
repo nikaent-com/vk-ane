@@ -20,7 +20,7 @@ VK.addEventListener(VKEvent, callback);
 ```
 
 - Авторизация/логин:
-- ```sh
-	VK.login(Scope.FRIENDS, Scope.NOTIFICATIONS, ...rest);
+```sh
+VK.login(Scope.FRIENDS, Scope.NOTIFICATIONS, ...rest);
 ```
-	в параметрах метода перечисляем все нужные Scopes
+в параметрах метода перечисляем все нужные Scopes
