@@ -120,10 +120,10 @@ public class ApiCall implements FREFunction {
 
 		FREObject result = null;
 
-		int method = 0;
+		String method = "";
 		String params = "";
 		try {
-			method = arg1[0].getAsInt();
+			method = arg1[0].getAsString();
 			params = arg1[1].getAsString();
 		} catch (IllegalStateException e) {
 			// TODO Auto-generated catch block
@@ -140,9 +140,22 @@ public class ApiCall implements FREFunction {
 		}
 
 		AneVk.log("call: " + method);
-		switch (method) {
+		
+		VKRequest request = null;
+		if(params.length()>1){
+			request = new VKRequest(method, VKParameters.from(VKApiConst.FIELDS, params), null);
+		}else{
+			request = new VKRequest(method, null, null);
+		}
+		request.secure = false;
+		request.useSystemLanguage = false;
+		
+		result = doRequest(request);
+
+		
+		/*switch (method) {
 		case MAKE_REQUEST: {
-			makeRequest();
+			VKRequest request = new VKRequest(, params, null);
 		}
 			break;
 		case USERS_GET: {
@@ -255,7 +268,7 @@ public class ApiCall implements FREFunction {
 			});
 		}
 			break;
-		}
+		}*/
 
 		return result;
 	}

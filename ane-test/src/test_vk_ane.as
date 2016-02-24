@@ -57,7 +57,7 @@ public class test_vk_ane extends Sprite {
             tf.text = VK.isLoggedIn()?"LoggenIn":"LoggenOut";
         }));
         buttons.push(new ButtonVk("apiCall()", function (e:Event):void {
-            VK.apiCall(2,UserParam.all, function(str:String):void{
+            VK.api("users.get",UserParam.all, function(str:String):void{
                 tf.text = str;
             });
         }));

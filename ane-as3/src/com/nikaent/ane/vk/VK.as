@@ -37,6 +37,12 @@ public class VK extends EventDispatcher {
         ane.init(appIdVk);
     }
 
+    public static function api(method:String, params:String, callback:Function):void {
+        var requestId:String = ane.call("apiCall", method, params) as String;
+        trace("requestId:" + requestId);
+        getInstance().mapCallback[requestId] = callback;
+    }
+
     public static function login(...scopes):void {
         for each(var str:* in scopes) {
             if (!(str is String)) {

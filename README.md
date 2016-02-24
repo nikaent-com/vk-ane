@@ -24,3 +24,11 @@ VK.addEventListener(VKEvent, callback);
 VK.login(Scope.FRIENDS, Scope.NOTIFICATIONS, ...rest);
 ```
 в параметрах метода перечисляем все нужные Scopes
+
+
+- Пример запроса в VK api
+```sh
+VK.api("users.get","id,first_name,last_name", function(str:String):void{
+                trace(str);
+            });
+```
