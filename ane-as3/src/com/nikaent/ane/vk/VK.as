@@ -60,12 +60,6 @@ public class VK extends EventDispatcher {
         return ane.call("isLoggedIn");
     }
 
-    public static function apiCall(method:int, params:String, callback:Function):void {
-        var requestId:String = ane.call("apiCall", method, params) as String;
-        trace("requestId:" + requestId);
-        getInstance().mapCallback[requestId] = callback;
-    }
-
     private static function get ane():ANE {
         return getInstance()._ane;
     }

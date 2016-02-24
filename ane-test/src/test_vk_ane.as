@@ -62,25 +62,11 @@ public class test_vk_ane extends Sprite {
             });
         }));
         buttons.push(new ButtonVk("method 3", function (e:Event):void {
-            VK.apiCall(3,"id,first_name,last_name,sex,bdate,city", function(str:String):void{
+            VK.api("friends.get","id,first_name,last_name,sex,bdate,city", function(str:String):void{
                 tf.text = str;
             });
         }));
-        buttons.push(new ButtonVk("method 4", function (e:Event):void {
-            VK.apiCall(4,"", function(str:String):void{
-                tf.text = str;
-            });
-        }));
-        buttons.push(new ButtonVk("method 5", function (e:Event):void {
-            VK.apiCall(5,"", function(str:String):void{
-                tf.text = str;
-            });
-        }));
-        buttons.push(new ButtonVk("method 6", function (e:Event):void {
-            VK.apiCall(6,"", function(str:String):void{
-                tf.text = str;
-            });
-        }));
+
 
         var aLast:TextField;
         for each(var button:ButtonVk in buttons) {

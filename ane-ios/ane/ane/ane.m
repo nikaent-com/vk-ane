@@ -6,9 +6,6 @@
 //  Copyright © 2016 Aleksey Kabanov. All rights reserved.
 //
 
-#define NSLog(fmt, ...)  { UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"%s\n [Line %d] ", __PRETTY_FUNCTION__, __LINE__] message:[NSString stringWithFormat:fmt, ##__VA_ARGS__]  delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil]; [alert show]; }
-
-
 #import "FlashRuntimeExtensions.h"
 #import <UIKit/UIKit.h>
 #import <VKSdk/VKSdk.h>
@@ -20,6 +17,8 @@ FREContext eventContext;
 VKStartScreen *tugeAneAdView;
 
 NSString *appVkId;
+
+uint32_t _reqCounter = 0;
 
 FREObject init(FREContext ctx, void* funcData, uint32_t argc, FREObject argv[])
 {
@@ -112,36 +111,28 @@ FREObject apiCall(FREContext ctx, void* funcData, uint32_t argc, FREObject argv[
                                                             error:nil];
     
     VKRequest *request = [VKApi requestWithMethod:method andParameters:paramsDic];
+
+    uint32_t idReq = ++_reqCounter;
+    NSString *idString = [NSString stringWithFormat:@"%d",idReq];
+    FREObject returnIdRequest = nil;
+    FRENewObjectFromUTF8(strlen([idString UTF8String]), (const uint8_t *)[idString UTF8String], &returnIdRequest);
+    
     [request executeWithResultBlock:^(VKResponse *response) {
+        NSString *code = [NSString stringWithFormat:@"response%d",idReq];
+        FREDispatchStatusEventAsync(eventContext,
+                                    ( const uint8_t * ) [code UTF8String],
+                                    ( const uint8_t * ) [[response responseString] UTF8String] );
+
         NSLog(@"Result: %@", response);
     }                    errorBlock:^(NSError *error) {
+        NSString *code = [NSString stringWithFormat:@"responseError%d",idReq];
+        FREDispatchStatusEventAsync(eventContext,
+                                    ( const uint8_t * ) [code UTF8String],
+                                    ( const uint8_t * ) [[error localizedDescription] UTF8String] );
         NSLog(@"Error: %@", error);
     }];
     
-    
-/*    switch (method) {
-        case 2:{
-            NSLog(@"getUsers");
-            NSData *data = [params dataUsingEncoding:NSUTF8StringEncoding];
-
-            NSArray *arrayScope = [NSJSONSerialization JSONObjectWithData:data
-                                                                  options:0
-                                                                    error:nil];
-            VKApi users
-            VKRequest *request = [[VKApi users] get];
-            [request executeWithResultBlock:^(VKResponse *response) {
-                NSLog(@"Result: %@", response);
-            }                    errorBlock:^(NSError *error) {
-                NSLog(@"Error: %@", error);
-            }];
-        }break;
-            
-        default:
-            break;
-    }
- */
-    
-    return NULL;
+    return returnIdRequest;
 }
 
 void VolExtContextInitializer(void* extData, const uint8_t* ctxType, FREContext ctx, uint32_t* numFunctionsToTest, const FRENamedFunction** functionsToSet)
