@@ -57,15 +57,21 @@ public class test_vk_ane extends Sprite {
             tf.text = VK.isLoggedIn()?"LoggenIn":"LoggenOut";
         }));
         buttons.push(new ButtonVk("apiCall()", function (e:Event):void {
-            VK.api("users.get",UserParam.all, function(str:String):void{
+            VK.api("users.get",'{"fields":"'+UserParam.all+'"}', function(str:String):void{
                 tf.text = str;
             });
         }));
         buttons.push(new ButtonVk("method 3", function (e:Event):void {
-            VK.api("friends.get","id,first_name,last_name,sex,bdate,city", function(str:String):void{
+            VK.api("friends.get",'{"fields":"id,first_name,last_name,sex,bdate,city"}', function(str:String):void{
                 tf.text = str;
             });
         }));
+        buttons.push(new ButtonVk("wall.post", function (e:Event):void {
+            VK.api("wall.post",'{"message":"messageтекст"}', function(str:String):void{
+                tf.text = str;
+            });
+        }));
+
 
 
         var aLast:TextField;

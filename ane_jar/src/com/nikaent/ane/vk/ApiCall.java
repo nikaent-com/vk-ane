@@ -1,9 +1,13 @@
 package com.nikaent.ane.vk;
 
+import java.util.Map;
+
 import com.adobe.fre.FREContext;
 import com.adobe.fre.FREFunction;
 import com.adobe.fre.FREObject;
 import com.adobe.fre.FREWrongThreadException;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.vk.sdk.api.VKApiConst;
 import com.vk.sdk.api.VKError;
 import com.vk.sdk.api.VKParameters;
@@ -34,9 +38,9 @@ public class ApiCall implements FREFunction {
 
 			AneVk.log("onError");
 			AneVk.log("request in: " + requestId);
-			AneVk.log(error.errorMessage);
+			AneVk.log(error.toString());
 
-			getContext().dispatchStatusEventAsync("responseError" + requestId, error.errorMessage);
+			getContext().dispatchStatusEventAsync("responseError" + requestId, error.toString());
 		}
 
 		@Override
@@ -66,11 +70,15 @@ public class ApiCall implements FREFunction {
 
 		String method = Utils.getString(arg1[0]);
 		String params = Utils.getString(arg1[1]);
+		
 		AneVk.log("call: " + method);
 		
 		VKRequest request = null;
 		if(params.length()>1){
-			request = new VKRequest(method, VKParameters.from(VKApiConst.FIELDS, params), null);
+			AneVk.log("paramsString: "+params);
+			Map<String, Object> map = new Gson().fromJson(params, new TypeToken<Map<String, Object>>(){}.getType());
+			AneVk.log("paramsMap: " + map);
+			request = new VKRequest(method, new VKParameters(map), null);
 		}else{
 			request = new VKRequest(method, null, null);
 		}
