@@ -14,6 +14,7 @@ public class VK extends EventDispatcher {
     private var _ane:ANE = null;
 
     private var mapCallback:Dictionary = new Dictionary();
+    private var mapError:Dictionary = new Dictionary();
 
     //PUBLIC-------------
 
@@ -37,10 +38,14 @@ public class VK extends EventDispatcher {
         ane.init(appIdVk);
     }
 
-    public static function api(method:String, params:String, callback:Function):void {
-        var requestId:String = ane.call("apiCall", method, params) as String;
+    public static function api(method:String, params:Object, onResponse:Function = null, onError:Function = null):void {
+        var requestId:String = ane.call("apiCall", method, JSON.stringify(params)) as String;
         trace("requestId:" + requestId);
-        getInstance().mapCallback[requestId] = callback;
+        if(requestId) {
+            trace("register callback:"+requestId);
+            getInstance().mapCallback[requestId] = onResponse;
+            getInstance().mapError[requestId] = onError;
+        }
     }
 
     public static function login(...scopes):void {
@@ -66,22 +71,34 @@ public class VK extends EventDispatcher {
 
     //PRIVATE-----------
 
+    private function callFunction(map:Dictionary, responseId:String, data:String):void {
+        if (map[responseId]) {
+            var callback:Function = map[responseId];
+            var responseData:Object = null;
+            try{
+                responseData = JSON.parse(data);
+            }catch (err:Error){
+                responseData = data;
+            }
+            callback(responseData);
+        }
+        delete mapError[responseId];
+        delete mapCallback[responseId];
+    }
+
     private function onStatus(code:String, data:String):void {
         trace("onStatus:" + code);
         if (code.substr(0, 8) == "response") {
-            var responseId:String = "";
-            if (code.substr(0, 13) == "responseError") {
+            var responseId:String = code.substr(8);
+            var map:Dictionary = mapCallback;
+            if (code.length >= 8 && code.substr(0, 13) == "responseError") {
                 responseId = code.substr(13);
-            } else if (code.substr(0, 14) == "responseFailed") {
+                map = mapError;
+            } else if (code.length >= 14 && code.substr(0, 14) == "responseFailed") {
                 responseId = code.substr(14);
-            } else {
-                responseId = code.substr(8);
+                map = mapError;
             }
-            if (mapCallback[responseId]) {
-                var callback:Function = mapCallback[responseId];
-                delete mapCallback[responseId];
-                callback(data);
-            }
+            callFunction(map, responseId, data);
         } else {
             switch (code) {
                 case VKEvent.AUTH_FAILED:

@@ -16,13 +16,15 @@ public class test_vk_ane extends Sprite {
 
     private const APP_ID : String = "5282890";
 
+    var tf:TextField;
+
     public function test_vk_ane() {
         Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
 
         var format1:TextFormat = new TextFormat();
         format1.font = "Arial";
         format1.size = 24;
-        var tf:TextField = new TextField();
+        tf = new TextField();
         tf.background = true;
         tf.backgroundColor = 0xAAAAAA;
         tf.setTextFormat(format1);
@@ -57,27 +59,23 @@ public class test_vk_ane extends Sprite {
             tf.text = VK.isLoggedIn()?"LoggenIn":"LoggenOut";
         }));
         buttons.push(new ButtonVk("apiCall()", function (e:Event):void {
-            VK.api("users.get",'{"fields":"'+UserParam.all+'"}', function(str:String):void{
-                tf.text = str;
-            });
+            VK.api("users.get",{"fields":UserParam.all}, callback, callback);
         }));
         buttons.push(new ButtonVk("method 3", function (e:Event):void {
-            VK.api("friends.get",'{"fields":"id,first_name,last_name,sex,bdate,city"}', function(str:String):void{
-                tf.text = str;
-            });
+            VK.api("friends.get",{"fields":"id,first_name,last_name,sex,bdate,city"}, callback, callback);
         }));
         buttons.push(new ButtonVk("wall.post", function (e:Event):void {
-            VK.api("wall.post",'{"message":"messageтекст"}', function(str:String):void{
-                tf.text = str;
-            });
+            VK.api("wall.post",{"message":"messageтекст"}, callback, callback);
         }));
-
-
 
         var aLast:TextField;
         for each(var button:ButtonVk in buttons) {
             aLast = setText(button.name, button.callback, 0, aLast ? (aLast.height + aLast.y + 10) : 0);
         }
+    }
+
+    private function callback(obj:*){
+        tf.text = JSON.stringify(obj);
     }
 
     private function setText(name:String, onclick:Function = null, x:int = 0, y:int = 0):TextField {
