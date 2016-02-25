@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="VK ANE" default="all">
     <!-- Config -->
-    <property file="build.properties.example"/>
+    <property file="build.properties"/>
 
     <!-- All -->
     <target name="all" depends="ios,android,swc,package" description="Full build"/>

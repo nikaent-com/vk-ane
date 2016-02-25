@@ -7,3 +7,5 @@ ane_as3.swc
 library.swf
 ane-lib/android/ane.jar
 ane-ios/libs
+build/build.properties
+UserInterfaceState.xcuserstate
