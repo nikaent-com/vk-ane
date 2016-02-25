@@ -39,13 +39,13 @@ FREObject init(FREContext ctx, void* funcData, uint32_t argc, FREObject argv[])
     CGRect rect0 = sc.bounds;
     
     CGRect rect = CGRectMake(0, 0, rect0.size.width, rect0.size.height);
-    tugeAneAdView.view.frame = rect;
+    vkscreen.view.frame = rect;
     
     id delegate = [[UIApplication sharedApplication] delegate];
     UIWindow * win = [delegate window];
-    [win addSubview:tugeAneAdView.view];
+    [win addSubview:vkscreen.view];
     
-    [tugeAneAdView.view setUserInteractionEnabled:false];
+    [vkscreen.view setUserInteractionEnabled:false];
     
     eventContext = ctx;
     [vkscreen start:appVkId scope:nil];
