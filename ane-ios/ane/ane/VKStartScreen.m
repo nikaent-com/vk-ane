@@ -31,18 +31,13 @@ static NSArray *SCOPE = nil;
 
 - (void)startWorking {
     NSLog(@"startWorking");
-    //[self performSegueWithIdentifier:NEXT_CONTROLLER_SEGUE_ID sender:self];
-    //[self getUsers];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 -(void) auth:(NSArray *) scope{
-    //SCOPE = @[VK_PER_FRIENDS, VK_PER_WALL, VK_PER_AUDIO, VK_PER_PHOTOS, VK_PER_NOHTTPS, VK_PER_EMAIL, VK_PER_MESSAGES];
-
     [VKSdk authorize:scope];
 }
 
@@ -102,7 +97,7 @@ static NSArray *SCOPE = nil;
 - (void)vkSdkShouldPresentViewController:(UIViewController *)controller {
     NSLog(@"vkSdkShouldPresentViewController\n");
     
-    //[self.navigationController.topViewController presentViewController:controller animated:YES completion:nil];
+    [self.navigationController.topViewController presentViewController:controller animated:YES completion:nil];
 }
 
 -(void) initReg

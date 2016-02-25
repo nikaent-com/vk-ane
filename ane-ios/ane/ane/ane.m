@@ -14,7 +14,7 @@
 
 
 FREContext eventContext;
-VKStartScreen *tugeAneAdView;
+VKStartScreen *vkscreen;
 
 NSString *appVkId;
 
@@ -34,7 +34,7 @@ FREObject init(FREContext ctx, void* funcData, uint32_t argc, FREObject argv[])
     NSLog(@"AppName: %@",appName);
     NSLog(@"AppVkId: %@",appVkId);
     
-    tugeAneAdView = [[VKStartScreen alloc] init];
+    vkscreen = [[VKStartScreen alloc] init];
     UIScreen *sc = [UIScreen mainScreen];
     CGRect rect0 = sc.bounds;
     
@@ -48,7 +48,7 @@ FREObject init(FREContext ctx, void* funcData, uint32_t argc, FREObject argv[])
     [tugeAneAdView.view setUserInteractionEnabled:false];
     
     eventContext = ctx;
-    [tugeAneAdView start:appVkId scope:nil];
+    [vkscreen start:appVkId scope:nil];
     
     return NULL;
 }
@@ -67,7 +67,7 @@ FREObject login(FREContext ctx, void* funcData, uint32_t argc, FREObject argv[])
                                                           options:0
                                                             error:nil];
     
-    [tugeAneAdView auth:arrayScope];
+    [vkscreen auth:arrayScope];
     NSLog(@"login: %@",arrayScope);
     return NULL;
 }
@@ -165,8 +165,6 @@ void VolExtContextInitializer(void* extData, const uint8_t* ctxType, FREContext 
 }
 void VolumeExtensionInitializer(void** extDataToSet, FREContextInitializer* ctxInitializerToSet, FREContextFinalizer* ctxFinalizerToSet)
 {
-    //initReg();
-    
     *extDataToSet = NULL;
     *ctxInitializerToSet = &VolExtContextInitializer;
 }
