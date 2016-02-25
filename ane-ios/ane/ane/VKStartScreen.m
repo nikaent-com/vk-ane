@@ -86,7 +86,7 @@ static NSArray *SCOPE = nil;
 }
 
 - (void)vkSdkTokenHasExpired:(VKAccessToken *)expiredToken {
-    //[self authorize:nil];
+    [VKSdk authorize:nil];
 }
 
 - (void)vkSdkAccessAuthorizationFinishedWithResult:(VKAuthorizationResult *)result {

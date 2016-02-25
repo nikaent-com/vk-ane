@@ -147,10 +147,11 @@ FREObject apiCall(FREContext ctx, void* funcData, uint32_t argc, FREObject argv[
         traceToAne([NSString stringWithFormat:@"Result: %@", response]);
     }                    errorBlock:^(NSError *error) {
         NSString *code = [NSString stringWithFormat:@"responseError%d",idReq];
+        NSString *errorJson = [NSString stringWithFormat:@"{vkErrorCode:%d, message:%@}",error.vkError.errorCode,error.vkError.errorMessage];
         FREDispatchStatusEventAsync(eventContext,
                                     ( const uint8_t * ) [code UTF8String],
-                                    ( const uint8_t * ) [[error localizedDescription] UTF8String] );
-        traceToAne([NSString stringWithFormat:@"Error: %@", error]);
+                                    ( const uint8_t * ) [errorJson UTF8String]);
+        traceToAne([NSString stringWithFormat:@"Error: %@", [error localizedDescription]]);
     }];
     
     return returnIdRequest;

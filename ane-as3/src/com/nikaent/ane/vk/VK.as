@@ -75,16 +75,10 @@ public class VK extends EventDispatcher {
 
     //PRIVATE-----------
 
-    private function callFunction(map:Dictionary, responseId:String, data:String):void {
+    private function callFunction(map:Dictionary, responseId:String, data:Object):void {
         if (map[responseId]) {
             var callback:Function = map[responseId];
-            var responseData:Object = null;
-            try{
-                responseData = JSON.parse(data);
-            }catch (err:Error){
-                responseData = data;
-            }
-            callback(responseData);
+            callback(data);
         }
         delete mapError[responseId];
         delete mapCallback[responseId];
@@ -92,17 +86,25 @@ public class VK extends EventDispatcher {
 
     private function onStatus(code:String, data:String):void {
         trace("onStatus:" + code);
+        var responseData:Object = null;
+        try{
+            responseData = JSON.parse(data);
+        }catch (err:Error){
+            responseData = data;
+        }
         if (code.substr(0, 8) == "response") {
             var responseId:String = code.substr(8);
             var map:Dictionary = mapCallback;
             if (code.length >= 8 && code.substr(0, 13) == "responseError") {
                 responseId = code.substr(13);
                 map = mapError;
+                responseData["errorCode"]=VKEvent.VK_API_RETURNED_ERROR;
             } else if (code.length >= 14 && code.substr(0, 14) == "responseFailed") {
                 responseId = code.substr(14);
                 map = mapError;
+                responseData["errorCode"]=VKEvent.VK_API_RETURNED_ERROR;
             }
-            callFunction(map, responseId, data);
+            callFunction(map, responseId, responseData);
         } else {
             switch (code) {
                 case VKEvent.AUTH_FAILED:
