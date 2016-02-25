@@ -8,6 +8,7 @@ VKRequest *callingRequest;
 
 - (void) auth:(NSArray *) scope;
 - (void) start:(NSString*) appVkId scope:(NSArray *) scope;
+- (void) testCaptcha;
 
 @end
 

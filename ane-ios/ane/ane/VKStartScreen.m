@@ -70,10 +70,19 @@ static NSArray *SCOPE = nil;
     }];
 }
 
+- (void)testCaptcha {
+    VKRequest *request = [[VKApiCaptcha new] force];
+    [request executeWithResultBlock:^(VKResponse *response) {
+        NSLog(@"Result: %@", response);
+    }                    errorBlock:^(NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+}
+
 
 - (void)vkSdkNeedCaptchaEnter:(VKError *)captchaError {
     VKCaptchaViewController *vc = [VKCaptchaViewController captchaControllerWithError:captchaError];
-    [vc presentIn:self.navigationController.topViewController];
+    [vc presentIn:self];
 }
 
 - (void)vkSdkTokenHasExpired:(VKAccessToken *)expiredToken {
@@ -97,7 +106,7 @@ static NSArray *SCOPE = nil;
 - (void)vkSdkShouldPresentViewController:(UIViewController *)controller {
     NSLog(@"vkSdkShouldPresentViewController\n");
     
-    [self.navigationController.topViewController presentViewController:controller animated:YES completion:nil];
+    [self presentViewController:controller animated:YES completion:nil];
 }
 
 -(void) initReg

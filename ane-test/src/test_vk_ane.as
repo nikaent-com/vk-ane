@@ -67,6 +67,9 @@ public class test_vk_ane extends Sprite {
         buttons.push(new ButtonVk("wall.post", function (e:Event):void {
             VK.api("wall.post",{"message":"messageтекст"}, callback, callback);
         }));
+        buttons.push(new ButtonVk("testCaptcha", function (e:Event):void {
+            VK.testCaptcha();
+        }));
 
         var aLast:TextField;
         for each(var button:ButtonVk in buttons) {

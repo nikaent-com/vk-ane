@@ -20,6 +20,14 @@ NSString *appVkId;
 
 uint32_t _reqCounter = 0;
 
+void traceToAne(NSString *str){
+    FREDispatchStatusEventAsync(eventContext,
+                                ( const uint8_t * ) "trace",
+                                ( const uint8_t * ) [str UTF8String] );
+    
+}
+
+
 FREObject init(FREContext ctx, void* funcData, uint32_t argc, FREObject argv[])
 {
     NSDictionary *bundleInfo = [[NSBundle mainBundle] infoDictionary];
@@ -31,8 +39,6 @@ FREObject init(FREContext ctx, void* funcData, uint32_t argc, FREObject argv[])
     appVkId = [NSString stringWithUTF8String: (char*) value];
     
     NSString *appName = [bundleInfo objectForKey:@"CFBundleIdentifier"];
-    NSLog(@"AppName: %@",appName);
-    NSLog(@"AppVkId: %@",appVkId);
     
     vkscreen = [[VKStartScreen alloc] init];
     UIScreen *sc = [UIScreen mainScreen];
@@ -50,31 +56,37 @@ FREObject init(FREContext ctx, void* funcData, uint32_t argc, FREObject argv[])
     eventContext = ctx;
     [vkscreen start:appVkId scope:nil];
     
+    traceToAne([NSString stringWithFormat:@"AppName: %@",appName]);
+    traceToAne([NSString stringWithFormat:@"AppVkId: %@",appVkId]);
+    
     return NULL;
 }
 
 FREObject login(FREContext ctx, void* funcData, uint32_t argc, FREObject argv[])
 {
-    NSLog(@"login");
+    traceToAne(@"begin login");
     
     uint32_t length;
     const uint8_t *value;
     FREGetObjectAsUTF8(argv[0], &length, &value);
     NSString *strScope = [NSString stringWithUTF8String: (char*) value];
+    traceToAne([NSString stringWithFormat:@"strScope: %@",strScope]);
     NSData *data = [strScope dataUsingEncoding:NSUTF8StringEncoding];
+    traceToAne([NSString stringWithFormat:@"data: %@",data]);
     
     NSArray *arrayScope = [NSJSONSerialization JSONObjectWithData:data
                                                           options:0
                                                             error:nil];
-    
+    traceToAne([NSString stringWithFormat:@"arrayScope: %lu",(unsigned long)arrayScope.count]);
+    traceToAne([NSString stringWithFormat:@"arrayScope: %@",arrayScope]);
     [vkscreen auth:arrayScope];
-    NSLog(@"login: %@",arrayScope);
+    traceToAne(@"end login");
     return NULL;
 }
 
 FREObject isLoggedIn(FREContext ctx, void* funcData, uint32_t argc, FREObject argv[])
 {
-    NSLog(@"isLoggedIn");
+    traceToAne(@"isLoggedIn");
     
     FREObject retBool = nil;
     FRENewObjectFromBool([VKSdk isLoggedIn], &retBool);
@@ -84,9 +96,18 @@ FREObject isLoggedIn(FREContext ctx, void* funcData, uint32_t argc, FREObject ar
 
 FREObject logout(FREContext ctx, void* funcData, uint32_t argc, FREObject argv[])
 {
-    NSLog(@"logout");
+    traceToAne(@"logout");
     
     [VKSdk forceLogout];
+    
+    return NULL;
+}
+
+FREObject testCaptcha(FREContext ctx, void* funcData, uint32_t argc, FREObject argv[])
+{
+    traceToAne(@"testCaptcha");
+    
+    [vkscreen testCaptcha];
     
     return NULL;
 }
@@ -102,7 +123,7 @@ FREObject apiCall(FREContext ctx, void* funcData, uint32_t argc, FREObject argv[
 {
     NSString *method = getString(argv[0]);
     NSString *params = getString(argv[1]);
-    NSLog(@"apiCall",params);
+    traceToAne([NSString stringWithFormat:@"apiCall",params]);
 
     NSData *data = [params dataUsingEncoding:NSUTF8StringEncoding];
     
@@ -123,21 +144,22 @@ FREObject apiCall(FREContext ctx, void* funcData, uint32_t argc, FREObject argv[
                                     ( const uint8_t * ) [code UTF8String],
                                     ( const uint8_t * ) [[response responseString] UTF8String] );
 
-        NSLog(@"Result: %@", response);
+        traceToAne([NSString stringWithFormat:@"Result: %@", response]);
     }                    errorBlock:^(NSError *error) {
         NSString *code = [NSString stringWithFormat:@"responseError%d",idReq];
         FREDispatchStatusEventAsync(eventContext,
                                     ( const uint8_t * ) [code UTF8String],
                                     ( const uint8_t * ) [[error localizedDescription] UTF8String] );
-        NSLog(@"Error: %@", error);
+        traceToAne([NSString stringWithFormat:@"Error: %@", error]);
     }];
     
     return returnIdRequest;
 }
 
+
 void VolExtContextInitializer(void* extData, const uint8_t* ctxType, FREContext ctx, uint32_t* numFunctionsToTest, const FRENamedFunction** functionsToSet)
 {
-    *numFunctionsToTest = 5;
+    *numFunctionsToTest = 6;
     
     FRENamedFunction* func = (FRENamedFunction*) malloc(sizeof(FRENamedFunction) * *numFunctionsToTest);
     
@@ -160,6 +182,10 @@ void VolExtContextInitializer(void* extData, const uint8_t* ctxType, FREContext 
     func[4].name = (const uint8_t*) "apiCall";
     func[4].functionData = NULL;
     func[4].function = &apiCall;
+    
+    func[5].name = (const uint8_t*) "testCaptcha";
+    func[5].functionData = NULL;
+    func[5].function = &testCaptcha;
     
     *functionsToSet = func;
 }

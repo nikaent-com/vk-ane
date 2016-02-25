@@ -54,11 +54,15 @@ public class VK extends EventDispatcher {
                 throw new Error(ErrorMessage.SCOPES);
             }
         }
-        ane.call("login", JSON.stringify(scopes));
+        ane.call("login", '["'+scopes.join('","')+'"]');
     }
 
     public static function logout():void {
         ane.call("logout");
+    }
+
+    public static function testCaptcha():void {
+        ane.call("testCaptcha");
     }
 
     public static function isLoggedIn():Boolean {
