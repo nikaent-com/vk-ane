@@ -1,5 +1,6 @@
 package com.nikaent.ane.vk.activity;
 
+import com.nikaent.ane.vk.AneVk;
 import com.nikaent.ane.vk.Login;
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKCallback;
@@ -9,8 +10,6 @@ import com.vk.sdk.api.VKError;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.support.v4.app.Fragment;
 
 
 public class AuthActivity extends Activity {
@@ -19,7 +18,7 @@ public class AuthActivity extends Activity {
 	private static String AUTH_FAILED 		= "FAILED";
 	
 	protected void onCreate(Bundle savedInstanceState) {
-		Log.w("ANE VK", "onCreate ApiCallActivity");
+		AneVk.log("onCreate ApiCallActivity");
 		super.onCreate(savedInstanceState);
 		Activity activity = this;
 		VKSdk.login(activity, Login.scope);
@@ -35,14 +34,14 @@ public class AuthActivity extends Activity {
 			@Override
 			public void onResult(VKAccessToken res) {
 				Login.context.dispatchStatusEventAsync(AUTH_SUCCESSFUL, "");
-				Log.i("ANE VK", "authorization successful");
+				AneVk.log("authorization successful");
 				
 			}
 
 			@Override
 			public void onError(VKError error) {
 				Login.context.dispatchStatusEventAsync(AUTH_FAILED, "");
-				Log.i("ANE VK", "authorization failed");
+				AneVk.log("authorization failed");
 			}
 		})) {
 			super.onActivityResult(requestCode, resultCode, data);
