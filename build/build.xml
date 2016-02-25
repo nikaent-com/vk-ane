@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="VK ANE" default="all">
     <!-- Config -->
-    <property file="build.properties"/>
+    <property file="build.properties.example"/>
 
     <!-- All -->
     <target name="all" depends="ios,android,swc,package" description="Full build"/>
@@ -23,7 +23,7 @@
             <arg line="SYMROOT=build/"/>
         </exec>
 
-        <copy file="../${ios.dir}/build/Release-iphoneos/lib${ios.name}.a" tofile="../temp/ios/lib${name}.a" overwrite="true"/>
+        <copy file="../${ios.dir}/build/Release-iphoneos/lib${ios.name}.a" tofile="../temp/ios/lib${ios.name}.a" overwrite="true"/>
         <delete dir="../${ios.dir}/build/"/>
     </target>
 
@@ -51,7 +51,7 @@
 		<copy todir="../temp/android/" overwrite="true">
   			<fileset dir="../${android.dir}/libs/" includes="*.jar"/>   
 		</copy>
-        <jar basedir="../${android.dir}/temp/classes" destfile="../temp/android/lib${name}.jar"/>
+        <jar basedir="../${android.dir}/temp/classes" destfile="../temp/android/lib${android.name}.jar"/>
         <delete dir="../${android.dir}/temp"/>
     </target>
 
@@ -91,7 +91,7 @@
             <arg value="-package"/>
             <arg value="-target"/>
             <arg value="ane"/>
-            <arg value="com.nikaent.ane.vk.ane"/>
+            <arg value="${name}.ane"/>
             <arg value="../build/extension.xml"/>
             <arg line="-swc swc/${name}.swc"/>
             <arg line="-platform iPhone-ARM -platformoptions ../build/platform-ios.xml -C ios/ ."/>
@@ -101,7 +101,7 @@
             <arg line="-platform default -C default/ ."/>
         </exec>
 
-        <move file="../temp/com.nikaent.ane.vk.ane" todir="../bin"/>
+        <move file="../temp/${name}.ane" todir="../bin"/>
         <delete dir="../temp/"/>
     </target>
 </project>

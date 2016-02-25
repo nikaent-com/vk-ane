@@ -19,6 +19,13 @@ VK.addEventListener(VKEvent, callback);
 // VKEvent.TOKEN_INVALID - ошибка в ключе
 ```
 
+- После init можно проверить, есть ли авторизация:
+```sh
+VK.isLoggedIn()?"LoggedIn":"LoggedOut"
+```
+возвращает Boolean
+
+
 - Авторизация/логин:
 ```sh
 VK.login(Scope.FRIENDS, Scope.NOTIFICATIONS, ...rest);
