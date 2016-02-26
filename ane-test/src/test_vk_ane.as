@@ -93,7 +93,7 @@ public class test_vk_ane extends Sprite {
         textfield.backgroundColor = 0xAAAAAA;
         textfield.setTextFormat(format1);
         //textfield.addEventListener(MouseEvent.CLICK, onclick);
-        textfield.addEventListener(TouchEvent.TOUCH_TAP, onclick)
+        textfield.addEventListener(TouchEvent.TOUCH_TAP, onclick);
         textfield.width = textfield.textWidth + 10;
         textfield.height = textfield.textHeight + 10;
         addChild(textfield);

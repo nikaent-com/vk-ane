@@ -2,49 +2,69 @@
  * Created by alekseykabanov on 10.02.16.
  */
 package com.nikaent.ane.vk {
+
 import com.nikaent.ane.vk.model.ErrorMessage;
 import com.nikaent.ane.vk.model.VKEvent;
 
 import flash.events.EventDispatcher;
+import flash.events.StatusEvent;
+import flash.external.ExtensionContext;
+import flash.system.Capabilities;
 import flash.utils.Dictionary;
 
 public class VK extends EventDispatcher {
-    private static var _inst:VK = null;
+    private static const RESPONSE:String = 'response';
+    private static const ERROR:String = 'Error';
+    private static const FAIL:String = 'Failed';
 
-    private var _ane:ANE = null;
+    private static var _inst:VK;
 
-    private var mapCallback:Dictionary = new Dictionary();
-    private var mapError:Dictionary = new Dictionary();
+    private static var _context:ExtensionContext;
 
-    //PUBLIC-------------
+    private static var mapCallback:Dictionary = new Dictionary();
+    private static var mapError:Dictionary = new Dictionary();
+    private static var _log:Function;
 
     public function VK() {
-        if (_inst) throw new Error(ErrorMessage.SINGLETON);
-
-        _inst = this;
-        _ane = new ANE(onStatus);
+        _inst ||= this;
     }
 
     public static function getInstance():VK {
-        if (!_inst) new VK();
-        return _inst;
+        return _inst ||= new VK();
+    }
+
+    public static function get isSupported():Boolean {
+        return _context && (Capabilities.manufacturer.search("Android") > -1 || Capabilities.manufacturer.search("iOS") > -1);
     }
 
     public static function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void {
         getInstance().addEventListener(type, listener, useCapture, priority, useWeakReference);
     }
 
-    public static function init(appIdVk:String):void {
-        ane.init(appIdVk);
+
+    public static function init(appIdVk:String, log:Function = null):void {
+        _log = log;
+        if (!_context) {
+            _context = ExtensionContext.createExtensionContext("com.nikaent.ane.vk", null);
+            if (isSupported) {
+                _context.addEventListener(StatusEvent.STATUS, onStatus);
+                _context.call('init', appIdVk);
+            }
+            if (!_context) {
+                throw new Error('Context Not Created');
+            }
+        }
     }
 
-    public static function api(method:String, params:Object, onResponse:Function = null, onError:Function = null):void {
-        var requestId:String = ane.call("apiCall", method, JSON.stringify(params)) as String;
-        trace("requestId:" + requestId);
-        if(requestId) {
-            trace("register callback:"+requestId);
-            getInstance().mapCallback[requestId] = onResponse;
-            getInstance().mapError[requestId] = onError;
+
+    public static function api(method:String,
+                               params:Object,
+                               onResponse:Function = null,
+                               onError:Function = null):void {
+        var requestId:String = String(callContext('apiCall', method, JSON.stringify(params)));
+        if (requestId) {
+            mapCallback[requestId] = onResponse;
+            mapError[requestId] = onError;
         }
     }
 
@@ -54,65 +74,110 @@ public class VK extends EventDispatcher {
                 throw new Error(ErrorMessage.SCOPES);
             }
         }
-        ane.call("login", '["'+scopes.join('","')+'"]');
+        callContext('login', '["' + scopes.join('","') + '"]');
     }
 
     public static function logout():void {
-        ane.call("logout");
+        callContext('logout');
     }
 
     public static function testCaptcha():void {
-        ane.call("testCaptcha");
+        callContext('testCaptcha');
     }
 
     public static function isLoggedIn():Boolean {
-        return ane.call("isLoggedIn");
+        return callContext('isLoggedIn');
     }
 
-    private static function get ane():ANE {
-        return getInstance()._ane;
-    }
-
-    //PRIVATE-----------
-
-    private function callFunction(map:Dictionary, responseId:String, data:Object):void {
-        if (map[responseId]) {
-            var callback:Function = map[responseId];
-            callback(data);
+    private static function callFunction(responseId:String, data:Object, isError:Boolean):void {
+        var callback:Function;
+        if (isError) {
+            callback = mapError[responseId];
+        }
+        else {
+            callback = mapCallback[responseId];
         }
         delete mapError[responseId];
         delete mapCallback[responseId];
+
+        if (callback is Function) {
+            callback(data);
+        }
     }
 
-    private function onStatus(code:String, data:String):void {
-        trace("onStatus:" + code);
-        var responseData:Object = null;
-        try{
-            responseData = JSON.parse(data);
-        }catch (err:Error){
-            responseData = data;
+    private static function onStatus(event:StatusEvent):void {
+        log('Status Event', event);
+
+        var code:String = event.code;
+        var responseData:Object;
+
+        try {
+            responseData = JSON.parse(event.level);
         }
-        if (code.substr(0, 8) == "response") {
-            var responseId:String = code.substr(8);
-            var map:Dictionary = mapCallback;
-            if (code.length >= 8 && code.substr(0, 13) == "responseError") {
-                responseId = code.substr(13);
-                map = mapError;
-                responseData["errorCode"]=VKEvent.VK_API_RETURNED_ERROR;
-            } else if (code.length >= 14 && code.substr(0, 14) == "responseFailed") {
-                responseId = code.substr(14);
-                map = mapError;
-                responseData["errorCode"]=VKEvent.VK_API_RETURNED_ERROR;
+        catch (err:Error) {
+            responseData = null;
+        }
+
+        if (!responseData || typeof responseData != 'object') {
+            if (typeof event.level == 'object') {
+                responseData = event.level;
             }
-            callFunction(map, responseId, responseData);
-        } else {
+            else {
+                responseData = {data: event.level};
+            }
+        }
+
+        if (code && code.indexOf(RESPONSE) == 0) {
+            var isError:Boolean;
+
+            var prefixLength:int = RESPONSE.length;
+            if (code.indexOf(RESPONSE + ERROR) == 0) {
+                prefixLength = (RESPONSE + ERROR).length;
+                responseData.errorCode = "VKError";
+                isError = true;
+            }
+            else if (code.indexOf(RESPONSE + FAIL) == 0) {
+                prefixLength = (RESPONSE + FAIL).length;
+                responseData.errorCode = "VKFail";
+                isError = true;
+            }
+
+            callFunction(code.substr(prefixLength), responseData, isError);
+        }
+        else {
             switch (code) {
                 case VKEvent.AUTH_FAILED:
                 case VKEvent.AUTH_SUCCESSFUL:
                 case VKEvent.TOKEN_INVALID:
-                    dispatchEvent(new VKEvent(code, data));
+                    getInstance().dispatchEvent(new VKEvent(code, responseData));
                     break;
             }
+        }
+    }
+
+    private static function callContext(...args):Object {
+        if (_context) {
+
+            return _context.call.apply(_context, args);
+        }
+        else {
+            log('Error Call Method No Context Available', args[0]);
+        }
+
+        return null;
+    }
+
+    private static function log(...args):void {
+        if (_log is Function) {
+            try {
+                _log.apply(null, args);
+            }
+            catch (error:Error) {
+                trace('Error Call External Log', error.message, error.getStackTrace());
+            }
+        }
+        else {
+            trace.apply(null, args);
         }
     }
 }

@@ -11,9 +11,9 @@ public class VKEvent extends Event {
     public static const TOKEN_INVALID               :String = "TOKEN_INVALID";
     public static const VK_API_RETURNED_ERROR       :String = "VK_API_RETURNED_ERROR";
 
-    public var data : String = "";
+    public var data : Object = null;
 
-    public function VKEvent(type:String, data:String = "") {
+    public function VKEvent(type:String, data:Object = "") {
         super(type);
         this.data = data;
     }
