@@ -37,6 +37,7 @@ public class test_vk_ane extends Sprite {
         });
         VK.addEventListener(VKEvent.AUTH_SUCCESSFUL, function (e:VKEvent):void {
             tf.text = VKEvent.AUTH_SUCCESSFUL;
+            VK.api("users.get",{"fields":"uid,first_name,last_name,photo_medium,photo_200,sex,bdate,online,country"}, callback, callback);
         });
         VK.addEventListener(VKEvent.TOKEN_INVALID, function (e:VKEvent):void {
             tf.text = VKEvent.TOKEN_INVALID;
@@ -59,7 +60,7 @@ public class test_vk_ane extends Sprite {
             tf.text = VK.isLoggedIn()?"LoggenIn":"LoggenOut";
         }));
         buttons.push(new ButtonVk("apiCall()", function (e:Event):void {
-            VK.api("users.get",{"fields":UserParam.all}, callback, callback);
+            VK.api("users.get",{"fields":"uid,first_name,last_name,photo_medium,photo_200,sex,bdate,online,country"}, callback, callback);
         }));
         buttons.push(new ButtonVk("method 3", function (e:Event):void {
             VK.api("friends.get",{"fields":"id,first_name,last_name,sex,bdate,city"}, callback, callback);

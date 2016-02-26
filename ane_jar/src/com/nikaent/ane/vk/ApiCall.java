@@ -41,7 +41,7 @@ public class ApiCall implements FREFunction {
 			AneVk.log(error.toString());
 
 			getContext().dispatchStatusEventAsync("responseError" + requestId, 
-					String.format("{vkErrorCode:%d, message:%s}", error.apiError.errorCode, error.apiError.errorMessage));
+					String.format("{\"vkErrorCode\":%d, \"message\":\"%s\"}", error.apiError.errorCode, error.apiError.errorMessage));
 		}
 
 		@Override
