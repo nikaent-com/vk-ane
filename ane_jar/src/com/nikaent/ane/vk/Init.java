@@ -34,6 +34,8 @@ public class Init implements FREFunction {
 
 		String[] fingerprints = VKUtil.getCertificateFingerprint(toastContext, toastContext.getPackageName());
 
+		AneVk.log("packageName: "+toastContext.getPackageName());
+		
 		for (int j = 0; j < fingerprints.length; j++) {
 			AneVk.log("fingerprint"+fingerprints[j]);
 		}
