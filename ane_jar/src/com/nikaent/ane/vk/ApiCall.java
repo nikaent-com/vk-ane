@@ -23,13 +23,14 @@ public class ApiCall implements FREFunction {
 		@Override
 		public void onComplete(VKResponse response) {
 			long requestId = response.request.registerObject();
-			String requestData = response.json.toString();
+			String requestData = response.responseString;
 
 			AneVk.log("onComplete");
 			AneVk.log("request in: " + requestId);
 			AneVk.log(requestData);
 
 			getContext().dispatchStatusEventAsync("response" + requestId, requestData);
+			response.request.unregisterObject();
 		}
 
 		@Override
@@ -39,9 +40,10 @@ public class ApiCall implements FREFunction {
 			AneVk.log("onError");
 			AneVk.log("request in: " + requestId);
 			AneVk.log(error.toString());
-
+			
 			getContext().dispatchStatusEventAsync("responseError" + requestId, 
 					String.format("{\"vkErrorCode\":%d, \"message\":\"%s\"}", error.apiError.errorCode, error.apiError.errorMessage));
+			error.request.unregisterObject();
 		}
 
 		@Override
@@ -58,13 +60,12 @@ public class ApiCall implements FREFunction {
 
 			getContext().dispatchStatusEventAsync("responseFailed" + requestId,
 					String.format("Attempt %d/%d failed\n", attemptNumber, totalAttempts));
+			request.unregisterObject();
 		}
 	};
 
 	@Override
 	public FREObject call(FREContext arg0, FREObject[] arg1) {
-		AneVk.log("ApiCall");
-
 		_context = arg0;
 
 		FREObject result = null;
@@ -72,13 +73,9 @@ public class ApiCall implements FREFunction {
 		String method = Utils.getString(arg1[0]);
 		String params = Utils.getString(arg1[1]);
 		
-		AneVk.log("call: " + method);
-		
 		VKRequest request = null;
 		if(params.length()>1){
-			AneVk.log("paramsString: "+params);
 			Map<String, Object> map = new Gson().fromJson(params, new TypeToken<Map<String, Object>>(){}.getType());
-			AneVk.log("paramsMap: " + map);
 			request = new VKRequest(method, new VKParameters(map), null);
 		}else{
 			request = new VKRequest(method, null, null);
@@ -93,7 +90,6 @@ public class ApiCall implements FREFunction {
 
 	private FREObject doRequest(VKRequest request) {
 		request.executeWithListener(_requestListener);
-		AneVk.log("request out: " + request.registerObject());
 		try {
 			return FREObject.newObject("" + request.registerObject());
 		} catch (FREWrongThreadException e) {
