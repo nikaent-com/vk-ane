@@ -50,7 +50,14 @@ public class test_vk_ane extends Sprite {
         }));
         buttons.push(new ButtonVk("login", function (e:Event):void {
             trace("login");
-            VK.login(Scope.FRIENDS, Scope.NOTIFICATIONS, Scope.STATUS, Scope.GROUPS, Scope.WALL, Scope.AUDIO, Scope.PHOTOS, Scope.NOHTTPS, Scope.EMAIL, Scope.MESSAGES);
+            VK.login(Scope.NOTIFY,
+                    Scope.FRIENDS,
+                    Scope.WALL,
+                    Scope.GROUPS,
+                    Scope.EMAIL,
+                    Scope.OFFLINE,
+                    Scope.NOHTTPS
+            );
             //VK.login(Scope.FRIENDS, Scope.NOTIFICATIONS, Scope.STATUS);
         }));
         buttons.push(new ButtonVk("logout", function (e:Event):void {
@@ -60,10 +67,12 @@ public class test_vk_ane extends Sprite {
             tf.text = VK.isLoggedIn()?"LoggenIn":"LoggenOut";
         }));
         buttons.push(new ButtonVk("apiCall()", function (e:Event):void {
-            VK.api("users.get",{"fields":"uid,first_name,last_name,photo_medium,photo_200,sex,bdate,online,country"}, callback, callback);
+            VK.api("users.get", {fields: 'id,first_name,last_name,photo_200,sex,bdate,online,country'}, callback, callback);
+            //VK.api("users.get",{"fields":"uid,first_name,last_name,photo_medium,photo_200,sex,bdate,online,country"}, callback, callback);
         }));
         buttons.push(new ButtonVk("method 3", function (e:Event):void {
-            VK.api("friends.get",{"fields":"id,first_name,last_name,sex,bdate,city"}, callback, callback);
+            VK.api("friends.getAppUsers",{}, callback, callback);
+//            VK.api("friends.get",{"fields":"id,first_name,last_name,sex,bdate,city"}, callback, callback);
         }));
         buttons.push(new ButtonVk("wall.post", function (e:Event):void {
             VK.api("wall.post",{"message":"messageтекст"}, callback, callback);
@@ -71,6 +80,15 @@ public class test_vk_ane extends Sprite {
         buttons.push(new ButtonVk("testCaptcha", function (e:Event):void {
             VK.testCaptcha();
         }));
+        buttons.push(new ButtonVk("testCaptcha", function (e:Event):void {
+            VK.left();
+        }));
+        buttons.push(new ButtonVk("sendRequest", function (e:Event):void {
+            VK.api("apps.sendRequest",{"user_id":"12837791","text":"Alexander, дарю тебе жизнь! Скорее заходи в игру и забери её!","type":"request","key":"requestKey","separate":0}, callback, callback);
+        }));
+
+
+
 
         var aLast:TextField;
         for each(var button:ButtonVk in buttons) {

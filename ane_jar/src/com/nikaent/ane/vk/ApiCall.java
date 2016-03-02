@@ -8,7 +8,6 @@ import com.adobe.fre.FREObject;
 import com.adobe.fre.FREWrongThreadException;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.vk.sdk.api.VKApiConst;
 import com.vk.sdk.api.VKError;
 import com.vk.sdk.api.VKParameters;
 import com.vk.sdk.api.VKRequest;
@@ -18,11 +17,12 @@ import com.vk.sdk.api.VKResponse;
 public class ApiCall implements FREFunction {
 
 	private FREContext _context = null;
+	private int requestId = 0;
+	static private int counterId = 0;
 
 	private VKRequestListener _requestListener = new VKRequestListener() {
 		@Override
 		public void onComplete(VKResponse response) {
-			long requestId = response.request.registerObject();
 			String requestData = response.responseString;
 
 			AneVk.log("onComplete");
@@ -35,15 +35,31 @@ public class ApiCall implements FREFunction {
 
 		@Override
 		public void onError(VKError error) {
-			long requestId = error.request.registerObject();
-
 			AneVk.log("onError");
 			AneVk.log("request in: " + requestId);
 			AneVk.log(error.toString());
 			
-			getContext().dispatchStatusEventAsync("responseError" + requestId, 
-					String.format("{\"vkErrorCode\":%d, \"message\":\"%s\"}", error.apiError.errorCode, error.apiError.errorMessage));
 			error.request.unregisterObject();
+			
+			int errorCode = 0;
+			String errorMessage = "";
+			try {
+				errorCode = error.apiError.errorCode;
+			} catch(Error e){
+				errorCode = -1;
+			}
+			try {
+				errorMessage = error.apiError.errorMessage;
+			} catch(Error e){
+				errorMessage = "error";
+			}
+			
+			try {
+			getContext().dispatchStatusEventAsync("responseError" + requestId, 
+					String.format("{\"vkErrorCode\":%d, \"message\":\"%s\"}", errorCode, errorMessage));
+			} catch(Error e){
+				AneVk.log("error getContext()");
+			}
 		}
 
 		@Override
@@ -53,8 +69,6 @@ public class ApiCall implements FREFunction {
 
 		@Override
 		public void attemptFailed(VKRequest request, int attemptNumber, int totalAttempts) {
-			long requestId = request.registerObject();
-
 			AneVk.log("attemptFailed");
 			AneVk.log("request in: " + requestId);
 
@@ -83,6 +97,8 @@ public class ApiCall implements FREFunction {
 		request.secure = false;
 		request.useSystemLanguage = false;
 		
+		requestId = counterId++;
+		
 		result = doRequest(request);
 
 		return result;
@@ -91,7 +107,9 @@ public class ApiCall implements FREFunction {
 	private FREObject doRequest(VKRequest request) {
 		request.executeWithListener(_requestListener);
 		try {
-			return FREObject.newObject("" + request.registerObject());
+			request.registerObject();
+			AneVk.log("send request id: " + requestId);
+			return FREObject.newObject("" + requestId);
 		} catch (FREWrongThreadException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
