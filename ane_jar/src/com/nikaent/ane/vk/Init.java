@@ -25,6 +25,7 @@ public class Init implements FREFunction {
 	public FREObject call(FREContext arg0, FREObject[] arg1) {
 		Context toastContext = arg0.getActivity();
 
+		AneVk._isDebug = Utils.getBool(arg1[1]);
 		String appVkIdStr = Utils.getString(arg1[0]);
 		int appVkId = Integer.parseInt(appVkIdStr);
 		AneVk.log("appVkId: "+appVkId);

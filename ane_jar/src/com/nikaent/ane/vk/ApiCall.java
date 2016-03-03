@@ -26,7 +26,7 @@ public class ApiCall implements FREFunction {
 			String requestData = response.responseString;
 
 			AneVk.log("onComplete");
-			AneVk.log("request in: " + requestId);
+			AneVk.log("request in: " + requestId, getContext());
 			AneVk.log(requestData);
 
 			getContext().dispatchStatusEventAsync("response" + requestId, requestData);

@@ -8,6 +8,8 @@ import android.util.Log;
 public class AneVk implements FREExtension{
 
 	public static String TAG = "ANE VK";
+	public static boolean _isDebug = false;
+	
 	
 	@Override
 	public FREContext createContext(String arg0) {
@@ -28,7 +30,12 @@ public class AneVk implements FREExtension{
 	}
 	
 	public static void log(String message){
-		Log.i(AneVk.TAG, message);
+		if(_isDebug)
+			Log.i(AneVk.TAG, message);
+	}
+	public static void log(String message, FREContext context){
+		context.dispatchStatusEventAsync("log", message);
+		log(message);
 	}
 
 }

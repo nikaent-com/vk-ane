@@ -14,11 +14,11 @@ import flash.ui.MultitouchInputMode;
 
 public class test_vk_ane extends Sprite {
 
-    private const APP_ID : String = "5282890";
+    private const APP_ID:String = "5282890";
 
     var tf:TextField;
 
-    public function test_vk_ane() {
+    public function test_vk_ane(sdf:int = 0) {
         Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
 
         var format1:TextFormat = new TextFormat();
@@ -37,7 +37,7 @@ public class test_vk_ane extends Sprite {
         });
         VK.addEventListener(VKEvent.AUTH_SUCCESSFUL, function (e:VKEvent):void {
             tf.text = VKEvent.AUTH_SUCCESSFUL;
-            VK.api("users.get",{"fields":"uid,first_name,last_name,photo_medium,photo_200,sex,bdate,online,country"}, callback, callback);
+            VK.api("users.get", {"fields": "uid,first_name,last_name,photo_medium,photo_200,sex,bdate,online,country"}, callback, callback);
         });
         VK.addEventListener(VKEvent.TOKEN_INVALID, function (e:VKEvent):void {
             tf.text = VKEvent.TOKEN_INVALID;
@@ -46,7 +46,7 @@ public class test_vk_ane extends Sprite {
         var buttons:Vector.<ButtonVk> = new Vector.<ButtonVk>();
         buttons.push(new ButtonVk("init", function (e:Event):void {
             trace("login");
-            VK.init(APP_ID);
+            VK.init(APP_ID, onLog, true);
         }));
         buttons.push(new ButtonVk("login", function (e:Event):void {
             trace("login");
@@ -64,30 +64,31 @@ public class test_vk_ane extends Sprite {
             VK.logout();
         }));
         buttons.push(new ButtonVk("isLoggedIn()", function (e:Event):void {
-            tf.text = VK.isLoggedIn()?"LoggenIn":"LoggenOut";
+            tf.text = VK.isLoggedIn() ? "LoggenIn" : "LoggenOut";
         }));
         buttons.push(new ButtonVk("apiCall()", function (e:Event):void {
             VK.api("users.get", {fields: 'id,first_name,last_name,photo_200,sex,bdate,online,country'}, callback, callback);
             //VK.api("users.get",{"fields":"uid,first_name,last_name,photo_medium,photo_200,sex,bdate,online,country"}, callback, callback);
         }));
         buttons.push(new ButtonVk("method 3", function (e:Event):void {
-            VK.api("friends.getAppUsers",{}, callback, callback);
+            VK.api("friends.getAppUsers", {}, callback, callback);
 //            VK.api("friends.get",{"fields":"id,first_name,last_name,sex,bdate,city"}, callback, callback);
         }));
         buttons.push(new ButtonVk("wall.post", function (e:Event):void {
-            VK.api("wall.post",{"message":"messageтекст"}, callback, callback);
+            VK.api("wall.post", {"message": "messageтекст"}, callback, callback);
         }));
         buttons.push(new ButtonVk("testCaptcha", function (e:Event):void {
             VK.testCaptcha();
         }));
-        buttons.push(new ButtonVk("testCaptcha", function (e:Event):void {
-            VK.left();
-        }));
         buttons.push(new ButtonVk("sendRequest", function (e:Event):void {
-            VK.api("apps.sendRequest",{"user_id":"12837791","text":"Alexander, дарю тебе жизнь! Скорее заходи в игру и забери её!","type":"request","key":"requestKey","separate":0}, callback, callback);
+            VK.api("apps.sendRequest", {
+                "user_id": "12837791",
+                "text": "Alexander, дарю тебе жизнь! Скорее заходи в игру и забери её!",
+                "type": "request",
+                "key": "requestKey",
+                "separate": 0
+            }, callback, callback);
         }));
-
-
 
 
         var aLast:TextField;
@@ -96,8 +97,12 @@ public class test_vk_ane extends Sprite {
         }
     }
 
-    private function callback(obj:*){
+    private function callback(obj:*) {
         tf.text = JSON.stringify(obj);
+    }
+
+    private function onLog(...args):void {
+        trace(args);
     }
 
     private function setText(name:String, onclick:Function = null, x:int = 0, y:int = 0):TextField {

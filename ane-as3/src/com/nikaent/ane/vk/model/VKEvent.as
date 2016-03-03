@@ -10,6 +10,7 @@ public class VKEvent extends Event {
     public static const AUTH_FAILED                 :String = "FAILED";
     public static const TOKEN_INVALID               :String = "TOKEN_INVALID";
     public static const VK_API_RETURNED_ERROR       :String = "VK_API_RETURNED_ERROR";
+    public static const LOG                         :String = "LOG";
 
     public var data : Object = null;
 

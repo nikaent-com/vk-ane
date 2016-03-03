@@ -23,7 +23,9 @@ public class VK extends EventDispatcher {
 
     private static var mapCallback:Dictionary = new Dictionary();
     private static var mapError:Dictionary = new Dictionary();
-    private static var _log:Function;
+    private static var _log:Function = null;
+
+    private static var _isDebug:Boolean = false;
 
     public function VK() {
         _inst ||= this;
@@ -42,13 +44,16 @@ public class VK extends EventDispatcher {
     }
 
 
-    public static function init(appIdVk:String, log:Function = null):void {
+    public static function init(appIdVk:String, log:Function = null, isDebug:Boolean = false):void {
         _log = log;
+        isDebug = isDebug;
+        log("manufacturer: ", Capabilities.manufacturer);
+
         if (!_context) {
             _context = ExtensionContext.createExtensionContext("com.nikaent.ane.vk", null);
             if (isSupported) {
                 _context.addEventListener(StatusEvent.STATUS, onStatus);
-                _context.call('init', appIdVk);
+                _context.call('init', appIdVk, isDebug);
             }
             if (!_context) {
                 throw new Error('Context Not Created');
@@ -62,6 +67,7 @@ public class VK extends EventDispatcher {
                                onResponse:Function = null,
                                onError:Function = null):void {
         var requestId:String = String(callContext('apiCall', method, JSON.stringify(params)));
+        log("Get requestId:", requestId);
         if (requestId) {
             mapCallback[requestId] = onResponse;
             mapError[requestId] = onError;
@@ -151,13 +157,16 @@ public class VK extends EventDispatcher {
                 case VKEvent.TOKEN_INVALID:
                     getInstance().dispatchEvent(new VKEvent(code, responseData));
                     break;
+                case VKEvent.LOG:
+                    log(code, responseData);
+                    break;
             }
         }
     }
 
     private static function callContext(...args):Object {
         if (_context) {
-
+            log("Send to ANE", args);
             return _context.call.apply(_context, args);
         }
         else {
@@ -168,7 +177,10 @@ public class VK extends EventDispatcher {
     }
 
     private static function log(...args):void {
-        if (_log is Function) {
+        if (_isDebug) {
+            trace(args);
+        }
+        if (_log) {
             try {
                 _log.apply(null, args);
             }

@@ -19,10 +19,14 @@ VKStartScreen *vkscreen;
 NSString *appVkId;
 
 uint32_t _reqCounter = 0;
+BOOL isDebug = false;
 
 void traceToAne(NSString *str){
+    if(isDebug){
+        NSLog(str);
+    }
     FREDispatchStatusEventAsync(eventContext,
-                                ( const uint8_t * ) "trace",
+                                ( const uint8_t * ) "LOG",
                                 ( const uint8_t * ) [str UTF8String] );
     
 }
@@ -31,6 +35,11 @@ void traceToAne(NSString *str){
 FREObject init(FREContext ctx, void* funcData, uint32_t argc, FREObject argv[])
 {
     NSDictionary *bundleInfo = [[NSBundle mainBundle] infoDictionary];
+    
+    
+    uint32_t bIsDebug;
+    FREGetObjectAsBool(argv[1], &bIsDebug);
+    isDebug = 1 == bIsDebug;
     
     uint32_t length;
     const uint8_t *value;

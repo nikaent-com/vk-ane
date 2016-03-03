@@ -26,4 +26,24 @@ public class Utils {
 
 		return str;
 	}
+	static public boolean getBool(FREObject obj){
+		boolean bool = false;
+		try {
+			bool = obj.getAsBool();
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (FRETypeMismatchException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (FREInvalidObjectException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (FREWrongThreadException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return bool;
+	}
 }

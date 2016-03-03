@@ -21,16 +21,15 @@ static NSArray *SCOPE = nil;
     [[VKSdk instance] setUiDelegate:self];
     [VKSdk wakeUpSession:SCOPE completeBlock:^(VKAuthorizationState state, NSError *error) {
         if (state == VKAuthorizationAuthorized) {
-            NSLog(@"VKAuthorizationAuthorized");
             [self startWorking];
         } else if (error) {
-            [[[UIAlertView alloc] initWithTitle:nil message:[error description] delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+            NSLog(@"error VKAuthorization");
         }
     }];
 }
 
 - (void)startWorking {
-    NSLog(@"startWorking");
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -73,9 +72,9 @@ static NSArray *SCOPE = nil;
 - (void)testCaptcha {
     VKRequest *request = [[VKApiCaptcha new] force];
     [request executeWithResultBlock:^(VKResponse *response) {
-        NSLog(@"Result: %@", response);
+        NSLog(@"Result testCaptcha: %@", response);
     }                    errorBlock:^(NSError *error) {
-        NSLog(@"Error: %@", error);
+        NSLog(@"Error testCaptcha: %@", error);
     }];
 }
 
@@ -90,7 +89,6 @@ static NSArray *SCOPE = nil;
 }
 
 - (void)vkSdkAccessAuthorizationFinishedWithResult:(VKAuthorizationResult *)result {
-    NSLog(@"vkSdkAccessAuthorizationFinishedWithResult\n");
     if (result.token) {
         [self startWorking];
     } else if (result.error) {
