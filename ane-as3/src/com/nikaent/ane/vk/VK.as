@@ -188,9 +188,6 @@ public class VK extends EventDispatcher {
                 trace('Error Call External Log', error.message, error.getStackTrace());
             }
         }
-        else {
-            trace.apply(null, args);
-        }
     }
 }
 }
