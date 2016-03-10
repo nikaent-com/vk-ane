@@ -46,8 +46,8 @@ public class VK extends EventDispatcher {
 
     public static function init(appIdVk:String, log:Function = null, isDebug:Boolean = false):void {
         _log = log;
-        isDebug = isDebug;
-        log("manufacturer: ", Capabilities.manufacturer);
+        _isDebug = isDebug;
+        VK.log("manufacturer: ", Capabilities.manufacturer);
 
         if (!_context) {
             _context = ExtensionContext.createExtensionContext("com.nikaent.ane.vk", null);

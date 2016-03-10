@@ -28,17 +28,17 @@ public class Init implements FREFunction {
 		AneVk._isDebug = Utils.getBool(arg1[1]);
 		String appVkIdStr = Utils.getString(arg1[0]);
 		int appVkId = Integer.parseInt(appVkIdStr);
-		AneVk.log("appVkId: "+appVkId);
+		AneVk.log("appVkId: "+appVkId, arg0);
 		
 		vkAccessTokenTracker.startTracking(); 
 		VKSdk.customInitialize(toastContext, appVkId, "5.21").withPayments();
 
 		String[] fingerprints = VKUtil.getCertificateFingerprint(toastContext, toastContext.getPackageName());
 
-		AneVk.log("packageName: "+toastContext.getPackageName());
+		AneVk.log("packageName: "+toastContext.getPackageName(), arg0);
 		
 		for (int j = 0; j < fingerprints.length; j++) {
-			AneVk.log("fingerprint"+fingerprints[j]);
+			AneVk.log("fingerprint: "+fingerprints[j], arg0);
 		}
 
 		return null;
