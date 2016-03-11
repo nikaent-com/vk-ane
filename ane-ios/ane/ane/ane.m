@@ -63,6 +63,7 @@ FREObject init(FREContext ctx, void* funcData, uint32_t argc, FREObject argv[])
     [vkscreen.view setUserInteractionEnabled:false];
     
     eventContext = ctx;
+    [vkscreen regSender:eventContext];
     [vkscreen start:appVkId scope:nil];
     
     traceToAne([NSString stringWithFormat:@"AppName: %@",appName]);

@@ -14,6 +14,9 @@ static NSArray *SCOPE = nil;
     [super viewDidLoad];
     [self initReg];
 }
+- (void) regSender:(FREContext) eventContext;{
+    _eventContext = eventContext;
+}
 - (void)start:(NSString*) appVkId scope:(NSArray *) scope {
     SCOPE = @[VK_PER_FRIENDS, VK_PER_WALL, VK_PER_AUDIO, VK_PER_PHOTOS, VK_PER_NOHTTPS, VK_PER_EMAIL, VK_PER_MESSAGES];
     id delegate = [[UIApplication sharedApplication] delegate];
@@ -29,7 +32,9 @@ static NSArray *SCOPE = nil;
 }
 
 - (void)startWorking {
-    
+    FREDispatchStatusEventAsync(_eventContext,
+                                ( const uint8_t * ) [@"AUTH_SUCCESSFUL" UTF8String],
+                                ( const uint8_t * ) [@"" UTF8String]);
 }
 
 - (void)didReceiveMemoryWarning {
@@ -72,9 +77,7 @@ static NSArray *SCOPE = nil;
 - (void)testCaptcha {
     VKRequest *request = [[VKApiCaptcha new] force];
     [request executeWithResultBlock:^(VKResponse *response) {
-        NSLog(@"Result testCaptcha: %@", response);
     }                    errorBlock:^(NSError *error) {
-        NSLog(@"Error testCaptcha: %@", error);
     }];
 }
 
@@ -97,20 +100,15 @@ static NSArray *SCOPE = nil;
 }
 
 - (void)vkSdkUserAuthorizationFailed {
-    NSLog(@"Access denied\n");
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void)vkSdkShouldPresentViewController:(UIViewController *)controller {
-    NSLog(@"vkSdkShouldPresentViewController\n");
-    
     [self presentViewController:controller animated:YES completion:nil];
 }
 
 -(void) initReg
 {
-    NSLog(@"AsPush :: registering app for remote notifications.");
-    
     //Code below found on stack overflow. Fantastic find.
     
     id delegate = [[UIApplication sharedApplication] delegate];
