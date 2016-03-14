@@ -45,12 +45,15 @@
 		<copy todir="../temp/android/vk-res" overwrite="true">
         	<fileset dir="../${android.dir}/vk-res"/>
 		</copy>
-		<copy todir="../temp/android/res" overwrite="true">
+		<copy todir="../temp/android/ane-res" overwrite="true">
   			<fileset dir="../${android.dir}/res"/>   
 		</copy>
-		<copy todir="../temp/android/" overwrite="true">
-  			<fileset dir="../${android.dir}/libs/" includes="*.jar"/>   
-		</copy>
+        <copy todir="../temp/android/" overwrite="true">
+            <fileset dir="../${android.dir}/libs/" includes="vk_sdk.jar"/>   
+        </copy>
+        <copy todir="../temp/android/" overwrite="true">
+            <fileset dir="../${android.dir}/libs/" includes="gson-2.5.jar"/>   
+        </copy>
         <jar basedir="../${android.dir}/temp/classes" destfile="../temp/android/lib${android.name}.jar"/>
         <delete dir="../${android.dir}/temp"/>
     </target>
