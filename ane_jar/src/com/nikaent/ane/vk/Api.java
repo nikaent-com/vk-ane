@@ -37,22 +37,30 @@ public class Api {
 			AneVk.log("request in: " + requestId);
 			AneVk.log(error.toString());
 			
-			error.request.unregisterObject();
+			try {
+				if(error!=null&&error.request!=null)
+				error.request.unregisterObject();
+			}catch(Error e){
+				//request null
+			}
 			
 			int errorCode = 0;
 			String errorMessage = "";
 			try {
+				if(error!=null&&error.apiError!=null)
 				errorCode = error.apiError.errorCode;
 			} catch(Error e){
 				errorCode = -1;
 			}
 			try {
+				if(error!=null&&error.apiError!=null)
 				errorMessage = error.apiError.errorMessage;
 			} catch(Error e){
 				errorMessage = "error";
 			}
 			
 			try {
+				if(getContext()!=null)
 			getContext().dispatchStatusEventAsync("responseError" + requestId, 
 					String.format("{\"vkErrorCode\":%d, \"message\":\"%s\"}", errorCode, errorMessage));
 			} catch(Error e){
