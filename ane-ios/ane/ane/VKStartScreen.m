@@ -26,7 +26,9 @@ static NSArray *SCOPE = nil;
         if (state == VKAuthorizationAuthorized) {
             [self startWorking];
         } else if (error) {
-            NSLog(@"error VKAuthorization");
+            FREDispatchStatusEventAsync(_eventContext,
+                                        ( const uint8_t * ) [@"FAILED" UTF8String],
+                                        ( const uint8_t * ) [[NSString stringWithFormat:@"Access denied\n%@", error] UTF8String]);
         }
     }];
 }
@@ -95,7 +97,9 @@ static NSArray *SCOPE = nil;
     if (result.token) {
         [self startWorking];
     } else if (result.error) {
-        NSLog([NSString stringWithFormat:@"Access denied\n%@", result.error]);
+        FREDispatchStatusEventAsync(_eventContext,
+                                    ( const uint8_t * ) [@"FAILED" UTF8String],
+                                    ( const uint8_t * ) [[NSString stringWithFormat:@"Access denied\n%@", result.error] UTF8String]);
     }
 }
 

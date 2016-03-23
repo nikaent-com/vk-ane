@@ -28,7 +28,8 @@ public class Api {
 			AneVk.log(requestData);
 
 			getContext().dispatchStatusEventAsync("response" + requestId, requestData);
-			response.request.unregisterObject();
+			if(response!=null&&response.request!=null)
+				response.request.unregisterObject();
 		}
 
 		@Override
