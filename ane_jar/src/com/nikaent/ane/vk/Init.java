@@ -32,6 +32,11 @@ public class Init implements FREFunction {
 		
 		vkAccessTokenTracker.startTracking(); 
 		VKSdk.customInitialize(toastContext, appVkId, "5.21").withPayments();
+		if(VKSdk.wakeUpSession(toastContext)){
+			arg0.dispatchStatusEventAsync("AUTH_SUCCESSFUL", "");
+		}else{
+			arg0.dispatchStatusEventAsync("FAILED", "");
+		}
 
 		String[] fingerprints = VKUtil.getCertificateFingerprint(toastContext, toastContext.getPackageName());
 
