@@ -12,7 +12,6 @@
 #import "VKStartScreen.h"
 #import <Foundation/Foundation.h>
 
-
 FREContext eventContext;
 VKStartScreen *vkscreen;
 
@@ -205,4 +204,3 @@ void VolumeExtensionInitializer(void** extDataToSet, FREContextInitializer* ctxI
     *extDataToSet = NULL;
     *ctxInitializerToSet = &VolExtContextInitializer;
 }
-

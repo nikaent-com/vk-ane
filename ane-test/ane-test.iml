@@ -9,13 +9,13 @@
               <dependency linkage="Merged" />
             </entry>
           </entries>
-          <sdk name="apache-flex" />
+          <sdk name="air19" />
         </dependencies>
         <compiler-options />
         <packaging-air-desktop />
         <packaging-android enabled="true" use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/test_vk_ane-app.xml" package-file-name="ane_test" />
         <packaging-ios enabled="true" use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/test_vk_ane_ios-app.xml" package-file-name="ane_test">
-          <AirSigningOptions keystore-path="$USER_HOME$/Downloads/Сертификаты.p12" provisioning-profile-path="$USER_HOME$/Downloads/ane_provision.mobileprovision" />
+          <AirSigningOptions keystore-path="$USER_HOME$/Documents/Сертификаты.p12" provisioning-profile-path="$USER_HOME$/Downloads/ane_provision.mobileprovision" />
         </packaging-ios>
       </configuration>
     </configurations>
@@ -26,7 +26,7 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
     </content>
-    <orderEntry type="jdk" jdkName="apache-flex" jdkType="Flex SDK Type (new)" />
+    <orderEntry type="jdk" jdkName="air19" jdkType="Flex SDK Type (new)" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library" exported="">
       <library type="flex">

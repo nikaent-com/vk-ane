@@ -32,21 +32,10 @@ public class test_vk_ane extends Sprite {
         tf.height = tf.width = 500;
         addChild(tf);
 
-        VK.addEventListener(VKEvent.AUTH_FAILED, function (e:VKEvent):void {
-            tf.text = VKEvent.AUTH_FAILED;
-        });
-        VK.addEventListener(VKEvent.AUTH_SUCCESSFUL, function (e:VKEvent):void {
-            tf.text = VKEvent.AUTH_SUCCESSFUL;
-            VK.api("users.get", {"fields": "uid,first_name,last_name,photo_medium,photo_200,sex,bdate,online,country"}, callback, callback);
-        });
-        VK.addEventListener(VKEvent.TOKEN_INVALID, function (e:VKEvent):void {
-            tf.text = VKEvent.TOKEN_INVALID;
-        });
-
         var buttons:Vector.<ButtonVk> = new Vector.<ButtonVk>();
         buttons.push(new ButtonVk("init", function (e:Event):void {
             trace("login");
-            VK.init(APP_ID, onLog, true);
+            VK.init(APP_ID, null, true);
         }));
         buttons.push(new ButtonVk("login", function (e:Event):void {
             trace("login");

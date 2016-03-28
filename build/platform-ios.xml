@@ -1,12 +1,3 @@
 <?xml version="1.0"?>
 <platform xmlns="http://ns.adobe.com/air/extension/4.0">
-	<linkerOptions> 
-		<option>-w</option>
-		<option>-framework SafariServices</option>
-		<option>-framework Security</option>
-		<option>-framework CoreGraphics</option>
-		<option>-framework QuartzCore</option>
-		<option>-framework UIKit</option>
-		<option>-framework Foundation</option>
-	</linkerOptions>
 </platform>

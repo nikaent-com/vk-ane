@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		6758E7851C71EDE000DF52F9 /* ane.m in Sources */ = {isa = PBXBuildFile; fileRef = 6758E7841C71EDE000DF52F9 /* ane.m */; };
-		6758E78D1C71EF1600DF52F9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6758E78C1C71EF1600DF52F9 /* Foundation.framework */; };
 		6771B1D71C747B160098C831 /* libVKSdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6771B1D61C747B160098C831 /* libVKSdk.a */; };
 		6771B1D91C747B2A0098C831 /* VKSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6771B1D81C747B2A0098C831 /* VKSdk.framework */; };
 		6771B1E71C747F0A0098C831 /* VKStartScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 6771B1E31C747F0A0098C831 /* VKStartScreen.m */; };
@@ -30,17 +29,10 @@
 		6758E77F1C71EDE000DF52F9 /* libane.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libane.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		6758E7841C71EDE000DF52F9 /* ane.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ane.m; sourceTree = "<group>"; };
 		6758E78B1C71EE5500DF52F9 /* FlashRuntimeExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FlashRuntimeExtensions.h; path = "/Users/alekseykabanov/Projects/vk-ane/ane-ios/ane/../../../sdk/air18/include/FlashRuntimeExtensions.h"; sourceTree = "<absolute>"; };
-		6758E78C1C71EF1600DF52F9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6771B1D61C747B160098C831 /* libVKSdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libVKSdk.a; sourceTree = "<group>"; };
 		6771B1D81C747B2A0098C831 /* VKSdk.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = VKSdk.framework; sourceTree = "<group>"; };
 		6771B1E21C747F0A0098C831 /* VKStartScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VKStartScreen.h; sourceTree = "<group>"; };
 		6771B1E31C747F0A0098C831 /* VKStartScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VKStartScreen.m; sourceTree = "<group>"; };
-		6771B2191C75F3EF0098C831 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
-		6771B21B1C75F40C0098C831 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
-		6771B21D1C75F4150098C831 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		6771B21F1C75F41C0098C831 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		6771B2211C75F4250098C831 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
-		6771B2231C75F4540098C831 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,7 +40,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6758E78D1C71EF1600DF52F9 /* Foundation.framework in Frameworks */,
 				6771B1D91C747B2A0098C831 /* VKSdk.framework in Frameworks */,
 				6771B1D71C747B160098C831 /* libVKSdk.a in Frameworks */,
 			);
@@ -60,15 +51,8 @@
 		6758E7761C71EDE000DF52F9 = {
 			isa = PBXGroup;
 			children = (
-				6771B2231C75F4540098C831 /* SystemConfiguration.framework */,
-				6771B2211C75F4250098C831 /* CoreFoundation.framework */,
-				6771B21F1C75F41C0098C831 /* UIKit.framework */,
-				6771B21D1C75F4150098C831 /* CoreGraphics.framework */,
-				6771B21B1C75F40C0098C831 /* MobileCoreServices.framework */,
-				6771B2191C75F3EF0098C831 /* SafariServices.framework */,
 				6771B1D81C747B2A0098C831 /* VKSdk.framework */,
 				6771B1D61C747B160098C831 /* libVKSdk.a */,
-				6758E78C1C71EF1600DF52F9 /* Foundation.framework */,
 				6758E78B1C71EE5500DF52F9 /* FlashRuntimeExtensions.h */,
 				6758E7811C71EDE000DF52F9 /* ane */,
 				6758E7801C71EDE000DF52F9 /* Products */,
@@ -245,12 +229,16 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
 				ONLY_ACTIVE_ARCH = NO;
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"$(inherited)",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -263,11 +251,16 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				OTHER_LDFLAGS = "-ObjC";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"$(inherited)",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
