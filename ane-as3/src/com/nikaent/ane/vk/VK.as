@@ -42,6 +42,10 @@ public class VK extends EventDispatcher {
     public static function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void {
         getInstance().addEventListener(type, listener, useCapture, priority, useWeakReference);
     }
+    
+    public static function removeEventListener(type:String, listener:Function, useCapture:Boolean = false):void {
+        getInstance().removeEventListener(type, listener, useCapture);
+    }
 
 
     public static function init(appIdVk:String, log:Function = null, isDebug:Boolean = false):void {
