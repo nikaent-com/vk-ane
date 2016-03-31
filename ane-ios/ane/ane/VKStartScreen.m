@@ -22,7 +22,12 @@ static NSArray *SCOPE = nil;
     id delegate = [[UIApplication sharedApplication] delegate];
     [[VKSdk initializeWithAppId:appVkId] registerDelegate:self];
     [[VKSdk instance] setUiDelegate:self];
-    [VKSdk wakeUpSession:SCOPE completeBlock:^(VKAuthorizationState state, NSError *error) {
+    
+    NSUserDefaults* userDef = [NSUserDefaults standardUserDefaults];
+    NSArray* str1 = [userDef arrayForKey:@"scopeVK"];
+    
+    if(str1){
+    [VKSdk wakeUpSession:str1 completeBlock:^(VKAuthorizationState state, NSError *error) {
         if (state == VKAuthorizationAuthorized) {
             [self startWorking];
         } else if (error) {
@@ -31,6 +36,12 @@ static NSArray *SCOPE = nil;
                                         ( const uint8_t * ) [[NSString stringWithFormat:@"Access denied\n%@", error] UTF8String]);
         }
     }];
+    }else{
+        FREDispatchStatusEventAsync(_eventContext,
+                                    ( const uint8_t * ) [@"FAILED" UTF8String],
+                                    ( const uint8_t * ) [@"no kash" UTF8String]);
+        
+    };
 }
 
 - (void)startWorking {
@@ -44,6 +55,7 @@ static NSArray *SCOPE = nil;
 }
 
 -(void) auth:(NSArray *) scope{
+    [[NSUserDefaults standardUserDefaults] setObject:scope forKey:@"scopeVK"];
     [VKSdk authorize:scope];
 }
 
