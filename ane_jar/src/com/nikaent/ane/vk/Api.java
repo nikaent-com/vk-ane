@@ -2,11 +2,11 @@ package com.nikaent.ane.vk;
 
 import java.util.Map;
 
+import org.json.JSONException;
+
 import com.adobe.fre.FREContext;
 import com.adobe.fre.FREObject;
 import com.adobe.fre.FREWrongThreadException;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.vk.sdk.api.VKError;
 import com.vk.sdk.api.VKParameters;
 import com.vk.sdk.api.VKRequest;
@@ -95,7 +95,14 @@ public class Api {
 		
 		VKRequest request = null;
 		if(params.length()>1){
-			Map<String, Object> map = new Gson().fromJson(params, new TypeToken<Map<String, Object>>(){}.getType());
+			Map<String, Object> map = null;
+			try {
+				map = Utils.toJSON(params);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 			request = new VKRequest(method, new VKParameters(map), null);
 		}else{
 			request = new VKRequest(method, null, null);
