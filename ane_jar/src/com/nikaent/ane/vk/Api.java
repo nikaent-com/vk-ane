@@ -108,7 +108,7 @@ public class Api {
 			request = new VKRequest(method, null, null);
 		}
 		request.secure = false;
-		request.useSystemLanguage = false;
+		request.useSystemLanguage = true;
 		
 		requestId = counterId++;
 		
